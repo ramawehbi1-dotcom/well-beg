@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوصلة الشغف والهدف</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .step { display: none; }
+        .step.active { display: block; }
+
+        h2 { margin-bottom: 20px; color: #0f172a; }
+        p { color: #64748b; line-height: 1.6; }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+
+        .compass-result {
+            background: #eef2ff;
+            border-right: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: right;
+            margin: 20px 0;
+        }
+
+        .qr-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+        }
+
+        #qrcode img {
+            margin: 15px auto;
+        }
+    </style>
+    <!-- مكتبة توليد الباركود (QR Code) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <!-- الخطوة 1: سؤال الجاهزية -->
+    <div id="step1" class="step active">
+        <h2>أهلاً بك في بوصلة المستقبل 🧭</h2>
+        <p>هل أنت مستعد لمواجهة تحديات التحول واكتشاف مسارك الحقيقي؟</p>
+        <button onclick="nextStep(2)">نعم، أنا مستعد تماماً!</button>
+    </div>
+
+    <!-- الخطوة 2: سؤال الرؤية والهدف -->
+    <div id="step2" class="step">
+        <h2>رؤيتك القادمة ✨</h2>
+        <p>أين تتمنى أن تكون وماذا تريد أن تحقق بعد **أربع سنوات** من الآن؟</p>
+        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال، قائد فريق..." required>
+        <button onclick="generateCompass()">توليد بوصلة النصائح 🪄</button>
+    </div>
+
+    <!-- الخطوة 3: عرض البوصلة والباركود -->
+    <div id="step3" class="step">
+        <h2>بوصلتك الشخصية 🧭</h2>
+        <div id="compassOutput" class="compass-result"></div>
+
+        <div class="qr-section">
+            <h3>امسح الباركود لإضافة التذكيرات 📲</h3>
+            <p style="font-size: 14px;">امسح الكود بكاميرا جوالك لإضافة خطتك والعبارات التحفيزية إلى تقويمك تلقائياً:</p>
+            <div id="qrcode"></div>
+        </div>
+
+        <button onclick="resetApp()" style="background-color: #475569;">إعادة التجربة بكرة جديدة 🔄</button>
+    </div>
+</div>
+
+<script>
+    function nextStep(stepNumber) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step' + stepNumber).classList.add('active');
+    }
+
+    function generateCompass() {
+        const goal = document.getElementById('userGoal').value.trim();
+        if (!goal) {
+            alert("لطفاً اكتب هدفك للسنوات الأربع القادمة لنتمكن من بناء البوصلة.");
+            return;
+        }
+
+        // تحليلات وعبارات تحفيزية ديناميكية بناءً على المدخلات
+        const adviceList = [
+            `الوصول إلى "${goal}" يتطلب الاستمرارية اليومية وليس فقط الشغف المؤقت.`,
+            `ركز خلال السنة الأولى على بناء المهارات الأساسية التي تجعلك خبيراً في مجالك.`,
+            `اجعل كل قرار تتخذه اليوم يخدم الصورة التي تريد أن تكون عليها بعد 4 سنوات.`
+        ];
+
+        const outputDiv = document.getElementById('compassOutput');
+        outputDiv.innerHTML = `
+            <strong>خطة البوصلة للوصول لـ (${goal}):</strong>
+            <ul>
+                <li>${adviceList[0]}</li>
+                <li>${adviceList[1]}</li>
+                <li>${adviceList[2]}</li>
+            </ul>
+        `;
+
+        // توليد رابط تقويم (.ics) وتحويله إلى باركود QR
+        generateQRCode(goal, adviceList[0]);
+
+        nextStep(3);
+    }
+
+    function generateQRCode(goal, reminderText) {
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = ""; // تنظيف الكود السابق
+
+        // إنشاء حدث تقويم يضاف للتذكيرات عند المسح
+        const title = encodeURIComponent(`تذكير الهدف: ${goal}`);
+        const details = encodeURIComponent(reminderText);
+        
+        // رابط يفتح تطبيق التقويم المباشر لإضافة التذكير
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
+
+        new QRCode(qrContainer, {
+            text: googleCalendarUrl,
+            width: 160,
+            height: 160,
+            colorDark : "#4f46e5",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
+
+    function resetApp() {
+        document.getElementById('userGoal').value = "";
+        nextStep(1);
+    }
+</script>
+
+</body>
+</html>
