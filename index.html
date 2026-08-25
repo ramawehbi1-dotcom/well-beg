@@ -119,12 +119,12 @@
         <div id="compassOutput" class="compass-result"></div>
 
         <div class="qr-section">
-            <h3>حفظ التذكير في التقويم 📲</h3>
-            <p style="font-size: 14px;">امسح الباركود بالكاميرا لفتح صفحة إضافة التذكير مباشرة إلى تقويمك:</p>
+            <h3>حفظ التذكير 📲</h3>
+            <p style="font-size: 14px;">امسح الكود بكاميرا الجوال لفتح رابط التقويم مباشرة:</p>
             
             <div id="qrcode"></div>
 
-            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">فتح التقويم وحفظ التذكير مباشرة 📅</a>
+            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">أو اضغط هنا للحفظ مباشرة 📅</a>
         </div>
 
         <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة 🔄</button>
@@ -159,33 +159,30 @@
             </ul>
         `;
 
-        setupCalendarEvent(goal, adviceList[0]);
+        setupCalendarEvent(goal);
         nextStep(3);
     }
 
-    function setupCalendarEvent(goal, advice) {
-        // إنشاء رابط تقويم ويب قياسي يتعرف عليه الجوال فوراً
-        const title = encodeURIComponent(`تذكير البوصلة: ${goal}`);
-        const details = encodeURIComponent(`نصيحة البوصلة: ${advice}`);
-        
-        // رابط تقويم Google المباشر (تفتح كصفحة ويب عند مسح الباركود)
-        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
+    function setupCalendarEvent(goal) {
+        // نص قصير جداً ليظل الباركود واضحاً ومبتعد المربعات
+        const title = encodeURIComponent(`هدف البوصلة: ${goal}`);
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}`;
 
-        // 1. تحديث زر الضغط المباشر
+        // 1. زر الضغط المباشر
         const calendarBtn = document.getElementById('directCalendarLink');
         calendarBtn.href = calendarUrl;
 
-        // 2. توليد الباركود ليحتوي على رابط الويب الصريح
+        // 2. توليد الباركود بحجم واسع ومربعات كبيرة سهلة القراءة
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
 
         new QRCode(qrContainer, {
             text: calendarUrl,
-            width: 180,
-            height: 180,
-            colorDark : "#1e293b",
+            width: 200,
+            height: 200,
+            colorDark : "#0f172a",
             colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.L
+            correctLevel : QRCode.CorrectLevel.L // مستوى تصحيح منخفض لجعل المربعات كبيرة جداً وسهلة الكشف
         });
     }
 
