@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوصلة الشغف والهدف</title>
+    <title>بوصلة المستقبل التفاعلية</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -30,7 +30,7 @@
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 500px;
+            max-width: 550px;
             width: 100%;
             text-align: center;
         }
@@ -38,17 +38,40 @@
         .step { display: none; }
         .step.active { display: block; }
 
-        h2 { margin-bottom: 20px; color: #0f172a; }
+        h2 { margin-bottom: 15px; color: #0f172a; }
         p { color: #64748b; line-height: 1.6; }
 
-        input[type="text"] {
+        input[type="text"], select {
             width: 100%;
             padding: 12px;
-            margin: 15px 0;
+            margin: 10px 0 20px 0;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        .mood-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .mood-btn {
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            padding: 15px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .mood-btn:hover, .mood-btn.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
         }
 
         button, .btn-link {
@@ -69,14 +92,18 @@
 
         button:hover, .btn-link:hover { background-color: var(--primary-hover); }
 
-        .compass-result {
-            background: #eef2ff;
-            border-right: 4px solid var(--primary);
+        .plan-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
             padding: 15px;
-            border-radius: 8px;
             text-align: right;
             margin: 20px 0;
         }
+
+        .plan-box h4 { margin: 5px 0 10px 0; color: var(--primary); }
+        .plan-box ul { padding-right: 20px; margin: 0; }
+        .plan-box li { margin-bottom: 8px; font-size: 14px; }
 
         .qr-section {
             margin-top: 20px;
@@ -92,70 +119,107 @@
             margin: 15px 0;
         }
     </style>
-    <!-- مكتبة توليد الباركود -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <!-- الخطوة 1 -->
+    <!-- الخطوة 1: تحديد الشعور -->
     <div id="step1" class="step active">
-        <h2>أهلاً بك في بوصلة المستقبل 🧭</h2>
-        <p>هل أنت مستعد لمواجهة تحديات التحول واكتشاف مسارك الحقيقي؟</p>
-        <button onclick="nextStep(2)">نعم، أنا مستعد تماماً!</button>
+        <h2>كيف تشعرين الآن تجاه مستقبلك المهني؟ 💭</h2>
+        <p>اختاري شعورك الحالي لنبني المسار الأنسب لك:</p>
+        <div class="mood-options">
+            <div class="mood-btn" onclick="selectMood('متحمسة', this)">🔥 متحمسة ومستعدة</div>
+            <div class="mood-btn" onclick="selectMood('مشتتة', this)">🌀 مشتتة أو محتارة</div>
+            <div class="mood-btn" onclick="selectMood('متخوفة', this)">قد متخوفة من التحدي</div>
+        </div>
+        <button onclick="goToStep2()">المتابعة ➔</button>
     </div>
 
-    <!-- الخطوة 2 -->
+    <!-- الخطوة 2: الهدف والعائق الرئيسي -->
     <div id="step2" class="step">
-        <h2>رؤيتك القادمة ✨</h2>
-        <p>أين تتمنى أن تكون وماذا تريد أن تحقق بعد **أربع سنوات** من الآن؟</p>
-        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال..." required>
-        <button onclick="generateCompass()">توليد بوصلة النصائح 🪄</button>
+        <h2>تحديد الرؤية والتحدي ✨</h2>
+        
+        <label style="display:block; text-align:right; font-weight:bold;">ما هو هدفك بعد 4 سنوات؟</label>
+        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، رائدة أعمال..." required>
+
+        <label style="display:block; text-align:right; font-weight:bold;">ما هو أكبر تحدٍ يواجهك حالياً؟</label>
+        <select id="userChallenge">
+            <option value="الوقت">إدارة الوقت والالتزام</option>
+            <option value="الخبرة">نقص الخبرة والمهارات المباشرة</option>
+            <option value="العلاقات">بناء العلاقات وتطوير الـ Networking</option>
+            <option value="الثقة">التردد أو الخوف من الفشل</option>
+        </select>
+
+        <button onclick="generateCustomPlan()">توليد الخطة والبوصلة 🪄</button>
     </div>
 
-    <!-- الخطوة 3 -->
+    <!-- الخطوة 3: عرض الخطة الشاملة والتفاعلات -->
     <div id="step3" class="step">
-        <h2>بوصلتك الشخصية 🧭</h2>
-        <div id="compassOutput" class="compass-result"></div>
+        <h2>بوصلة العمل والمستقبل 🧭</h2>
+        
+        <div id="planOutput" class="plan-box"></div>
 
         <div class="qr-section">
-            <h3>حفظ التذكير 📲</h3>
-            <p style="font-size: 14px;">امسح الكود بكاميرا الجوال لفتح رابط التقويم مباشرة:</p>
+            <h3>حفظ الخطة في تقويم الجوال 📲</h3>
+            <p style="font-size: 13px;">امسحي الباركود بكاميرا الجوال لإضافة موعد التذكير بالخطة إلى تقويمك مباشرة:</p>
             
             <div id="qrcode"></div>
 
-            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">أو اضغط هنا للحفظ مباشرة 📅</a>
+            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">فتح التقويم وحفظ التذكير 📅</a>
         </div>
 
-        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة 🔄</button>
+        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة بمدخلات جديدة 🔄</button>
     </div>
 </div>
 
 <script>
+    let selectedMood = "متحمسة";
+
+    function selectMood(mood, element) {
+        selectedMood = mood;
+        document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function goToStep2() {
+        nextStep(2);
+    }
+
     function nextStep(stepNumber) {
         document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
         document.getElementById('step' + stepNumber).classList.add('active');
     }
 
-    function generateCompass() {
+    function generateCustomPlan() {
         const goal = document.getElementById('userGoal').value.trim();
+        const challenge = document.getElementById('userChallenge').value;
+
         if (!goal) {
-            alert("لطفاً اكتب هدفك للسنوات الأربع القادمة لنتمكن من بناء البوصلة.");
+            alert("لطفاً اكتبي هدفك المستقبلي للسنوات الأربع القادمة.");
             return;
         }
 
-        const adviceList = [
-            `الوصول إلى "${goal}" يتطلب الاستمرارية اليومية وليس فقط الشغف المؤقت.`,
-            `ركز خلال السنة الأولى على بناء المهارات الأساسية التي تجعلك خبيراً في مجالك.`,
-            `اجعل كل قرار تتخذه اليوم يخدم الصورة التي تريد أن تكون عليها بعد 4 سنوات.`
-        ];
+        // بناء خطة عمل ديناميكية بناءً على الشعور والتحدي والهدف
+        let moodAdvice = "";
+        if (selectedMood === "متحمسة") moodAdvice = "استغلي هذه الطاقة فوراً في إنهاء أول دورة أو كتاب تخصصي خلال هذا الشهر.";
+        else if (selectedMood === "مشتتة") moodAdvice = "ركزي على هدف واحد رئيسي فقط هذا الأسبوع ولا تشغلي نفسك بالتفاصيل المتقدمة.";
+        else moodAdvice = "التخوف طبيعي؛ قسّمي هدفك الكبير إلى خطوات أسبوعية صغيرة جداً لكسر الرهبة.";
 
-        document.getElementById('compassOutput').innerHTML = `
-            <strong>خطة البوصلة للوصول لـ (${goal}):</strong>
+        let challengeSolution = "";
+        if (challenge === "الوقت") challengeSolution = "خصصي 45 دقيقة يومياً ثابتة دون انقطاع لتطوير مهاراتك المباشرة.";
+        else if (challenge === "الخبرة") challengeSolution = "ابدئي بالتطبيق العملي والمشاريع الشبيهة حتى قبل الحصول على وظيفة رسمية.";
+        else if (challenge === "العلاقات") challengeSolution = "تفاعلي مع 3 أشخاص متخصصين في مجالك عبر LinkedIn أسبوعياً.";
+        else challengeSolution = "شاركي أفكارك ومشاريعك مع مجتمعات مصغرة لتلقي الآراء والتطوير المستمر.";
+
+        // عرض الخطة التكتيكية
+        document.getElementById('planOutput').innerHTML = `
+            <h4>خطة الطريق للوصول إلى: (${goal})</h4>
             <ul>
-                <li>${adviceList[0]}</li>
-                <li>${adviceList[1]}</li>
-                <li>${adviceList[2]}</li>
+                <li><strong>الخطوة الأولى (بناءً على شعورك):</strong> ${moodAdvice}</li>
+                <li><strong>تجاوز تحدي (${challenge}):</strong> ${challengeSolution}</li>
+                <li><strong>خطة السنة الأولى:</strong> الحصول على الشهادات المهنية المعتمدة وبناء معايير الخبرة الأساسية.</li>
+                <li><strong>رؤية الـ 4 سنوات:</strong> قيادة مشاريع متكاملة والوصول لدرجة الخبيرة المستشارة.</li>
             </ul>
         `;
 
@@ -164,25 +228,22 @@
     }
 
     function setupCalendarEvent(goal) {
-        // نص قصير جداً ليظل الباركود واضحاً ومبتعد المربعات
-        const title = encodeURIComponent(`هدف البوصلة: ${goal}`);
+        const title = encodeURIComponent(`خطة هدف: ${goal}`);
         const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}`;
 
-        // 1. زر الضغط المباشر
-        const calendarBtn = document.getElementById('directCalendarLink');
-        calendarBtn.href = calendarUrl;
+        document.getElementById('directCalendarLink').href = calendarUrl;
 
-        // 2. توليد الباركود بحجم واسع ومربعات كبيرة سهلة القراءة
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
 
+        // باركود سريع ومبسط جداً للتأكد من القراءة الفورية
         new QRCode(qrContainer, {
             text: calendarUrl,
-            width: 200,
-            height: 200,
+            width: 180,
+            height: 180,
             colorDark : "#0f172a",
             colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.L // مستوى تصحيح منخفض لجعل المربعات كبيرة جداً وسهلة الكشف
+            correctLevel : QRCode.CorrectLevel.L
         });
     }
 
@@ -191,6 +252,10 @@
         nextStep(1);
     }
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
