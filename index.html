@@ -41,7 +41,7 @@
         h2 { margin-bottom: 20px; color: #0f172a; }
         p { color: #64748b; line-height: 1.6; }
 
-        input[type="text"], select {
+        input[type="text"] {
             width: 100%;
             padding: 12px;
             margin: 15px 0;
@@ -51,7 +51,7 @@
             font-size: 16px;
         }
 
-        button {
+        button, .btn-link {
             background-color: var(--primary);
             color: white;
             border: none;
@@ -62,9 +62,12 @@
             width: 100%;
             transition: background 0.2s;
             margin-top: 10px;
+            display: inline-block;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
-        button:hover { background-color: var(--primary-hover); }
+        button:hover, .btn-link:hover { background-color: var(--primary-hover); }
 
         .compass-result {
             background: #eef2ff;
@@ -80,45 +83,51 @@
             padding: 15px;
             border: 1px dashed #cbd5e1;
             border-radius: 8px;
+            background: #fafafa;
         }
 
-        #qrcode img {
-            margin: 15px auto;
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
         }
     </style>
-    <!-- مكتبة توليد الباركود (QR Code) -->
+    <!-- مكتبة توليد الباركود -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <!-- الخطوة 1: سؤال الجاهزية -->
+    <!-- الخطوة 1 -->
     <div id="step1" class="step active">
         <h2>أهلاً بك في بوصلة المستقبل 🧭</h2>
         <p>هل أنت مستعد لمواجهة تحديات التحول واكتشاف مسارك الحقيقي؟</p>
         <button onclick="nextStep(2)">نعم، أنا مستعد تماماً!</button>
     </div>
 
-    <!-- الخطوة 2: سؤال الرؤية والهدف -->
+    <!-- الخطوة 2 -->
     <div id="step2" class="step">
         <h2>رؤيتك القادمة ✨</h2>
         <p>أين تتمنى أن تكون وماذا تريد أن تحقق بعد **أربع سنوات** من الآن؟</p>
-        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال، قائد فريق..." required>
+        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال..." required>
         <button onclick="generateCompass()">توليد بوصلة النصائح 🪄</button>
     </div>
 
-    <!-- الخطوة 3: عرض البوصلة والباركود -->
+    <!-- الخطوة 3 -->
     <div id="step3" class="step">
         <h2>بوصلتك الشخصية 🧭</h2>
         <div id="compassOutput" class="compass-result"></div>
 
         <div class="qr-section">
-            <h3>امسح الباركود لإضافة التذكيرات 📲</h3>
-            <p style="font-size: 14px;">امسح الكود بكاميرا جوالك لإضافة خطتك والعبارات التحفيزية إلى تقويمك تلقائياً:</p>
+            <h3>حفظ التذكير في الجوال 📲</h3>
+            <p style="font-size: 14px;">امسح الكود بكاميرا جوال آخر، أو اضغط الزر بالأسفل إذا كنت تستخدم جوالك الآن:</p>
+            
             <div id="qrcode"></div>
+
+            <a id="downloadIcs" class="btn-link" style="background-color: #059669;" download="goal-reminder.ics">تنزيل التذكير إلى التقويم مباشرة 📅</a>
         </div>
 
-        <button onclick="resetApp()" style="background-color: #475569;">إعادة التجربة بكرة جديدة 🔄</button>
+        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة 🔄</button>
     </div>
 </div>
 
@@ -135,15 +144,13 @@
             return;
         }
 
-        // تحليلات وعبارات تحفيزية ديناميكية بناءً على المدخلات
         const adviceList = [
             `الوصول إلى "${goal}" يتطلب الاستمرارية اليومية وليس فقط الشغف المؤقت.`,
             `ركز خلال السنة الأولى على بناء المهارات الأساسية التي تجعلك خبيراً في مجالك.`,
             `اجعل كل قرار تتخذه اليوم يخدم الصورة التي تريد أن تكون عليها بعد 4 سنوات.`
         ];
 
-        const outputDiv = document.getElementById('compassOutput');
-        outputDiv.innerHTML = `
+        document.getElementById('compassOutput').innerHTML = `
             <strong>خطة البوصلة للوصول لـ (${goal}):</strong>
             <ul>
                 <li>${adviceList[0]}</li>
@@ -152,30 +159,41 @@
             </ul>
         `;
 
-        // توليد رابط تقويم (.ics) وتحويله إلى باركود QR
-        generateQRCode(goal, adviceList[0]);
-
+        setupCalendarEvent(goal, adviceList[0]);
         nextStep(3);
     }
 
-    function generateQRCode(goal, reminderText) {
-        const qrContainer = document.getElementById('qrcode');
-        qrContainer.innerHTML = ""; // تنظيف الكود السابق
+    function setupCalendarEvent(goal, advice) {
+        // إنشاء بيانات ملف التقويم القياسي VCALENDAR
+        const icsData = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Compass App//NONSGML v1.0//EN
+BEGIN:VEVENT
+SUMMARY:تذكير هدف البوصلة: ${goal}
+DESCRIPTION:${advice}
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
 
-        // إنشاء حدث تقويم يضاف للتذكيرات عند المسح
-        const title = encodeURIComponent(`تذكير الهدف: ${goal}`);
-        const details = encodeURIComponent(reminderText);
-        
-        // رابط يفتح تطبيق التقويم المباشر لإضافة التذكير
-        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
+        // تحويل النص إلى رابط Data URI يفهمه أي جهاز
+        const icsBlobUrl = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsData);
+
+        // 1. تحديث زر التنزيل المباشر
+        const downloadBtn = document.getElementById('downloadIcs');
+        downloadBtn.href = icsBlobUrl;
+
+        // 2. توليد الباركود ليحتوي على رابط التقويم المباشر
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = "";
 
         new QRCode(qrContainer, {
-            text: googleCalendarUrl,
-            width: 160,
-            height: 160,
-            colorDark : "#4f46e5",
+            text: icsBlobUrl,
+            width: 180,
+            height: 180,
+            colorDark : "#1e293b",
             colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            correctLevel : QRCode.CorrectLevel.M
         });
     }
 
