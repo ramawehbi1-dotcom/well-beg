@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوصلة المستقبل التفاعلية</title>
+    <title>بوصلة المستقبل التفاعلية 🧭</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -11,6 +11,7 @@
             --bg: #f8fafc;
             --card-bg: #ffffff;
             --text: #1e293b;
+            --accent: #059669;
         }
 
         body {
@@ -22,15 +23,15 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 550px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 500px;
             width: 100%;
             text-align: center;
         }
@@ -38,85 +39,109 @@
         .step { display: none; }
         .step.active { display: block; }
 
-        h2 { margin-bottom: 15px; color: #0f172a; }
-        p { color: #64748b; line-height: 1.6; }
+        h2 { margin-bottom: 10px; color: #0f172a; font-size: 22px; }
+        p { color: #64748b; line-height: 1.5; font-size: 15px; margin-bottom: 15px; }
 
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0 20px 0;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 15px;
-            background: #fff;
-        }
-
-        .mood-options {
+        .mood-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .mood-btn {
-            background: #f1f5f9;
-            border: 2px solid transparent;
-            padding: 15px 5px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .mood-btn:hover, .mood-btn.selected {
-            border-color: var(--primary);
-            background: #eef2ff;
-        }
-
-        button, .btn-link {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-            margin-top: 10px;
-            display: inline-block;
-            text-decoration: none;
-            box-sizing: border-box;
-        }
-
-        button:hover, .btn-link:hover { background-color: var(--primary-hover); }
-
-        .plan-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: right;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin: 20px 0;
         }
 
-        .plan-box h4 { margin: 5px 0 10px 0; color: var(--primary); }
-        .plan-box ul { padding-right: 20px; margin: 0; }
-        .plan-box li { margin-bottom: 8px; font-size: 14px; }
+        .mood-card {
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            padding: 18px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .mood-card:hover, .mood-card.selected {
+            border-color: var(--primary);
+            background: #eef2ff;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+
+        .plan-box {
+            background: #eef2ff;
+            border-right: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: right;
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
         .qr-section {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #cbd5e1;
-            border-radius: 8px;
             background: #fafafa;
+            border: 1px dashed #cbd5e1;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
         }
 
         #qrcode {
             display: flex;
             justify-content: center;
-            margin: 15px 0;
+            margin: 10px 0;
+        }
+
+        .preset-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .preset-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: right;
+            transition: 0.2s;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        textarea {
+            width: 100%;
+            height: 70px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 8px;
+            font-family: inherit;
+            resize: none;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -124,138 +149,130 @@
 <body>
 
 <div class="container">
-    <!-- الخطوة 1: تحديد الشعور -->
+
+    <!-- المرحلة 1: سؤال الشعور -->
     <div id="step1" class="step active">
-        <h2>كيف تشعرين الآن تجاه مستقبلك المهني؟ 💭</h2>
-        <p>اختاري شعورك الحالي لنبني المسار الأنسب لك:</p>
-        <div class="mood-options">
-            <div class="mood-btn" onclick="selectMood('متحمسة', this)">🔥 متحمسة ومستعدة</div>
-            <div class="mood-btn" onclick="selectMood('مشتتة', this)">🌀 مشتتة أو محتارة</div>
-            <div class="mood-btn" onclick="selectMood('متخوفة', this)">قد متخوفة من التحدي</div>
-        </div>
-        <button onclick="goToStep2()">المتابعة ➔</button>
-    </div>
-
-    <!-- الخطوة 2: الهدف والعائق الرئيسي -->
-    <div id="step2" class="step">
-        <h2>تحديد الرؤية والتحدي ✨</h2>
+        <h2>أهلاً بكِ في بوصلتكِ المستقبلية 🧭✨</h2>
+        <p>ما هو الشعور الأغلب عليكِ الآن في بداية هذه الرحلة؟</p>
         
-        <label style="display:block; text-align:right; font-weight:bold;">ما هو هدفك بعد 4 سنوات؟</label>
-        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، رائدة أعمال..." required>
+        <div class="mood-grid">
+            <div class="mood-card" onclick="selectMood('متحمسة', this)">🤩 متحمسة ومستعدة</div>
+            <div class="mood-card" onclick="selectMood('مشتتة', this)">🌀 مشتتة ومحتارة</div>
+            <div class="mood-card" onclick="selectMood('متخوفة', this)">تك متخوفة من التكليفات</div>
+            <div class="mood-card" onclick="selectMood('واثقة', this)">💪 طموحة وواثقة</div>
+        </div>
 
-        <label style="display:block; text-align:right; font-weight:bold;">ما هو أكبر تحدٍ يواجهك حالياً؟</label>
-        <select id="userChallenge">
-            <option value="الوقت">إدارة الوقت والالتزام</option>
-            <option value="الخبرة">نقص الخبرة والمهارات المباشرة</option>
-            <option value="العلاقات">بناء العلاقات وتطوير الـ Networking</option>
-            <option value="الثقة">التردد أو الخوف من الفشل</option>
-        </select>
-
-        <button onclick="generateCustomPlan()">توليد الخطة والبوصلة 🪄</button>
+        <button onclick="goToStep2()">الانتقال للخطة والتذكير ➔</button>
     </div>
 
-    <!-- الخطوة 3: عرض الخطة الشاملة والتفاعلات -->
-    <div id="step3" class="step">
-        <h2>بوصلة العمل والمستقبل 🧭</h2>
+    <!-- المرحلة 2: الخطة والتذكير والباركود -->
+    <div id="step2" class="step">
+        <h2>خطة العمل والتذكير بحلمكِ 🎯</h2>
         
         <div id="planOutput" class="plan-box"></div>
 
         <div class="qr-section">
-            <h3>حفظ الخطة في تقويم الجوال 📲</h3>
-            <p style="font-size: 13px;">امسحي الباركود بكاميرا الجوال لإضافة موعد التذكير بالخطة إلى تقويمك مباشرة:</p>
-            
+            <h4 style="margin:0 0 5px 0;">تذكير الحلم في التقويم 📲</h4>
+            <p style="font-size: 13px; margin: 0;">امسحي الباركود لحفظ التذكير بحلمكِ وخطة وصولكِ مباشرة في تقويم جوالكِ:</p>
             <div id="qrcode"></div>
-
-            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">فتح التقويم وحفظ التذكير 📅</a>
         </div>
 
-        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة بمدخلات جديدة 🔄</button>
+        <button onclick="goToStep3()">الانتقال لأسئلة ومشاركات الركن ➔</button>
     </div>
+
+    <!-- المرحلة 3: الركن التفاعلي والأسئلة -->
+    <div id="step3" class="step">
+        <h2>المساحة التفاعلية للركن 💬</h2>
+        <p>هل لديكِ سؤال للسنوات المتقدمة أو تجربة تودين مشاركتها؟</p>
+
+        <label style="font-size: 13px; font-weight: bold; display: block; text-align: right;">أو اختاري سؤالاً جاهزاً بضغطة زر:</label>
+        <div class="preset-questions">
+            <button class="preset-btn" onclick="usePreset('كيف أوازن بين المعدل العالي والأنشطة الطلابية؟')">💡 كيف أوازن بين المعدل العالي والأنشطة الطلابية؟</button>
+            <button class="preset-btn" onclick="usePreset('ما هي أفضل طريقة لتخطي رهبة أول فاينل/تكليف؟')">🎯 ما هي أفضل طريقة لتخطي رهبة أول تكليف جامعي؟</button>
+        </div>
+
+        <textarea id="userQuestion" placeholder="أو اكتبي سؤالكِ الخاص هنا..."></textarea>
+        <button onclick="submitQuestion()" style="background-color: var(--accent);">إرسال للركن 🚀</button>
+
+        <button onclick="resetApp()" style="background-color: #475569; margin-top: 20px;">طالبة جديدة (إعادة ضبط) 🔄</button>
+    </div>
+
 </div>
 
 <script>
-    let selectedMood = "متحمسة";
+    let chosenMood = "";
 
     function selectMood(mood, element) {
-        selectedMood = mood;
-        document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
+        chosenMood = mood;
+        document.querySelectorAll('.mood-card').forEach(card => card.classList.remove('selected'));
         element.classList.add('selected');
     }
 
     function goToStep2() {
-        nextStep(2);
-    }
-
-    function nextStep(stepNumber) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step' + stepNumber).classList.add('active');
-    }
-
-    function generateCustomPlan() {
-        const goal = document.getElementById('userGoal').value.trim();
-        const challenge = document.getElementById('userChallenge').value;
-
-        if (!goal) {
-            alert("لطفاً اكتبي هدفك المستقبلي للسنوات الأربع القادمة.");
+        if (!chosenMood) {
+            alert("لطفاً اختاري شعوركِ أولاً لمتابعة الخطوات!");
             return;
         }
 
-        // بناء خطة عمل ديناميكية بناءً على الشعور والتحدي والهدف
-        let moodAdvice = "";
-        if (selectedMood === "متحمسة") moodAdvice = "استغلي هذه الطاقة فوراً في إنهاء أول دورة أو كتاب تخصصي خلال هذا الشهر.";
-        else if (selectedMood === "مشتتة") moodAdvice = "ركزي على هدف واحد رئيسي فقط هذا الأسبوع ولا تشغلي نفسك بالتفاصيل المتقدمة.";
-        else moodAdvice = "التخوف طبيعي؛ قسّمي هدفك الكبير إلى خطوات أسبوعية صغيرة جداً لكسر الرهبة.";
+        let planText = "";
+        if (chosenMood === "متحمسة") {
+            planText = `<strong>خطة الطاقة والحماس:</strong><br>• وجهي شغفكِ نحو الانضمام لأول نادٍ طلابي ينتمي لمجالكِ.<br>• ابني شبكة معارف مع طالبات السنوات الأخيرة من الأسبوع الأول.`;
+        } else if (chosenMood === "مشتتة") {
+            planText = `<strong>خطة تركيز الشتات:</strong><br>• ركزي فقط على جدول الأسبوع الحالي ولا تشغلي بالكِ بتكاليف النهاية.<br>• استخدمي تقويم الجوال لجدولة المواعيد فور استلامها.`;
+        } else if (chosenMood === "متخوفة") {
+            planText = `<strong>خطة الطمأنينة والإنجاز:</strong><br>• الخوف طبيعي جداً؛ قسّمي كل مشروع إلى خطوات صغيرة جداً.<br>• اسألي أستاذة المادة في الساعات المكتبية فور وجود أي نقطة غير واضحة.`;
+        } else {
+            planText = `<strong>خطة الاستمرار والتميز:</strong><br>• حافظي على التوازن بين صحتكِ ونومكِ وبين التحصيل العلمي.<br>• ابدئي بالاطلاع على الشهادات المهنية المعتمدة لمجالكِ المستقبلي.`;
+        }
 
-        let challengeSolution = "";
-        if (challenge === "الوقت") challengeSolution = "خصصي 45 دقيقة يومياً ثابتة دون انقطاع لتطوير مهاراتك المباشرة.";
-        else if (challenge === "الخبرة") challengeSolution = "ابدئي بالتطبيق العملي والمشاريع الشبيهة حتى قبل الحصول على وظيفة رسمية.";
-        else if (challenge === "العلاقات") challengeSolution = "تفاعلي مع 3 أشخاص متخصصين في مجالك عبر LinkedIn أسبوعياً.";
-        else challengeSolution = "شاركي أفكارك ومشاريعك مع مجتمعات مصغرة لتلقي الآراء والتطوير المستمر.";
+        document.getElementById('planOutput').innerHTML = planText;
 
-        // عرض الخطة التكتيكية
-        document.getElementById('planOutput').innerHTML = `
-            <h4>خطة الطريق للوصول إلى: (${goal})</h4>
-            <ul>
-                <li><strong>الخطوة الأولى (بناءً على شعورك):</strong> ${moodAdvice}</li>
-                <li><strong>تجاوز تحدي (${challenge}):</strong> ${challengeSolution}</li>
-                <li><strong>خطة السنة الأولى:</strong> الحصول على الشهادات المهنية المعتمدة وبناء معايير الخبرة الأساسية.</li>
-                <li><strong>رؤية الـ 4 سنوات:</strong> قيادة مشاريع متكاملة والوصول لدرجة الخبيرة المستشارة.</li>
-            </ul>
-        `;
-
-        setupCalendarEvent(goal);
-        nextStep(3);
-    }
-
-    function setupCalendarEvent(goal) {
-        const title = encodeURIComponent(`خطة هدف: ${goal}`);
-        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}`;
-
-        document.getElementById('directCalendarLink').href = calendarUrl;
-
+        // توليد باركود التذكير بـ Google Calendar
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير هدف البوصلة')}&details=${encodeURIComponent(planText.replace(/<br>/g, ' '))}`;
+        
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
-
-        // باركود سريع ومبسط جداً للتأكد من القراءة الفورية
         new QRCode(qrContainer, {
             text: calendarUrl,
-            width: 180,
-            height: 180,
+            width: 160,
+            height: 160,
             colorDark : "#0f172a",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         });
+
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+    }
+
+    function goToStep3() {
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step3').classList.add('active');
+    }
+
+    function usePreset(questionText) {
+        document.getElementById('userQuestion').value = questionText;
+    }
+
+    function submitQuestion() {
+        const q = document.getElementById('userQuestion').value.trim();
+        if (q) {
+            alert("شكراً لمشاركتكِ! تم استلام سؤالكِ في الركن بنجاح ✨");
+            document.getElementById('userQuestion').value = "";
+        } else {
+            alert("لطفاً اكتبي سؤالاً أو اختاري أحد الأسئلة المقترحة أولاً.");
+        }
     }
 
     function resetApp() {
-        document.getElementById('userGoal').value = "";
-        nextStep(1);
+        chosenMood = "";
+        document.querySelectorAll('.mood-card').forEach(card => card.classList.remove('selected'));
+        document.getElementById('userQuestion').value = "";
+        document.getElementById('step3').classList.remove('active');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step1').classList.add('active');
     }
 </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
