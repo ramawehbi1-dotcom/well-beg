@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zone 1 - البدايات | المجلس الاستشاري الطلابي</title>
+    <title>حملة اسألني | Zone 1 - البدايات 🧭</title>
     <style>
         :root {
             --pnu-purple: #702b84;
@@ -30,36 +30,48 @@
             background: var(--card-bg);
             padding: 30px 20px;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(112, 43, 132, 0.12);
-            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(112, 43, 132, 0.15);
+            max-width: 460px;
             width: 100%;
             text-align: center;
-            border: 1px solid #f0abfc;
+            border: 2px solid #f0abfc;
+            position: relative;
         }
 
         .header-tag {
-            background: #fae8ff;
-            color: var(--pnu-purple);
-            padding: 6px 16px;
+            background: var(--pnu-purple);
+            color: #ffffff;
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 13px;
             font-weight: bold;
             display: inline-block;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+        }
+
+        .ask-me-badge {
+            background: var(--pnu-teal);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
         h1 { margin: 5px 0; color: var(--pnu-purple); font-size: 24px; font-weight: 800; }
-        .sub-title { color: #a855f7; font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+        .sub-title { color: #a855f7; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
 
         .step { display: none; }
-        .step.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        .step.active { display: block; animation: slideUp 0.3s ease-out; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* خيارات الشعور */
+        /* بطاقات الشعور المتحركة */
         .mood-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -70,21 +82,36 @@
         .mood-card {
             background: #faf5ff;
             border: 2px solid #f0abfc;
-            padding: 15px 8px;
+            padding: 16px 10px;
             border-radius: 16px;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
             color: var(--pnu-purple);
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .mood-card:hover, .mood-card.selected {
             background: var(--pnu-purple);
             color: white;
             border-color: var(--pnu-purple);
-            transform: scale(1.02);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(112, 43, 132, 0.2);
         }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f0abfc;
+            border-radius: 12px;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin: 10px 0 15px 0;
+            outline: none;
+            text-align: center;
+        }
+
+        input[type="text"]:focus { border-color: var(--pnu-purple); }
 
         button {
             background: linear-gradient(135deg, var(--pnu-purple), var(--pnu-pink));
@@ -96,9 +123,12 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
-            box-shadow: 0 4px 12px rgba(112, 43, 132, 0.2);
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(112, 43, 132, 0.25);
+            transition: all 0.2s ease;
         }
+
+        button:hover { transform: translateY(-1px); }
 
         .plan-box {
             background: #faf5ff;
@@ -109,19 +139,30 @@
             margin: 15px 0;
             font-size: 13px;
             line-height: 1.6;
+            color: var(--text-color);
         }
 
-        .qr-section {
-            background: #fff;
-            border: 2px dashed #f0abfc;
-            padding: 15px;
-            border-radius: 16px;
-            margin: 15px 0;
+        .reminder-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        #qrcode { display: flex; justify-content: center; margin: 10px 0; }
+        .rem-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
 
-        /* خيارات الأسئلة السريعة */
+        .apple-btn { background: #000000; }
+        .google-btn { background: var(--pnu-teal); }
+
+        /* أسئلة حملة اسألني */
         .question-card {
             background: #faf5ff;
             border: 1px solid #e9d5ff;
@@ -133,12 +174,15 @@
             font-size: 13px;
             font-weight: bold;
             color: var(--pnu-purple);
+            transition: 0.2s;
         }
+
+        .question-card:hover { background: #f0abfc; color: white; }
 
         .answer-box {
             background: #fff;
             border: 1px solid #f0abfc;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             margin-bottom: 10px;
             text-align: right;
@@ -148,19 +192,19 @@
             line-height: 1.5;
         }
     </style>
-    <!-- مكتبة الباركود المبسط -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
 <div class="container">
-    <div class="header-tag">المجلس الاستشاري الطلابي</div>
-    <h1>Zone 1 - البدايات 🧭</h1>
-    <div class="sub-title">"من هنا بدأنا.. ومشاعرك طبيعية"</div>
+    <div class="header-tag">Zone 1 - البدايات</div><br>
+    <div class="ask-me-badge">حملة اسألني ASK ME ❓</div>
+    
+    <h1>من هنا بدأنا 🧭</h1>
+    <div class="sub-title">المجلس الاستشاري الطلابي - جامعة الأميرة نورة</div>
 
-    <!-- المرحلة 1: اختيار الشعور -->
+    <!-- المرحلة 1: الشعور + تحديد الحلم -->
     <div id="step1" class="step active">
-        <p style="font-size: 14px; color: #6b21a8;">ماذا تشعرين الآن في أول يوم لكِ بالرحلة الجامعية؟</p>
+        <p style="font-size: 14px; font-weight: bold;">كيف تشعرين اليوم في بداية رحلتكِ؟</p>
         
         <div class="mood-grid">
             <div class="mood-card" onclick="selectMood('حماس', this)">✨ حماس ورغبة بالإنجاز</div>
@@ -169,34 +213,43 @@
             <div class="mood-card" onclick="selectMood('تفاؤل', this)">🌸 تفاؤل وأمل بالفرص</div>
         </div>
 
-        <button onclick="goToStep2()">الانتقال للتذكير والبوصلة ➔</button>
+        <p style="font-size: 13px; font-weight: bold; margin-top: 15px; margin-bottom: 0;">ما هو حلمكِ أو مساركِ بعد 4 سنوات؟</p>
+        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، قائدة أعمال، طبيبة..." required>
+
+        <button onclick="generatePlan()">توليد الخطة والبوصلة ➔</button>
     </div>
 
-    <!-- المرحلة 2: الخطة والتذكير بباركود خفيف ومبسط -->
+    <!-- المرحلة 2: عرض الخطة المباشرة والتذكيرات -->
     <div id="step2" class="step">
         <div id="planOutput" class="plan-box"></div>
 
-        <div class="qr-section">
-            <h4 style="margin:0 0 5px 0; color:var(--pnu-purple);">حفظ تذكير "البدايات" 📲</h4>
-            <p style="font-size: 12px; color: #6b21a8; margin: 0 0 10px 0;">امسحي الباركود لحفظ رسالة البوصلة في تقويم جوالكِ مباشرة:</p>
+        <div style="background: #ffffff; border: 1px dashed #f0abfc; padding: 12px; border-radius: 12px; margin: 15px 0;">
+            <h4 style="margin: 0 0 5px 0; color: var(--pnu-purple);">احفظي خطتك وحلمك في تقويم الجوال 📲</h4>
+            <p style="font-size: 12px; margin: 0 0 10px 0; color: #6b21a8;">اضغطي على نوع جهازك لإضافة تذكير بـ "البدايات" مباشرة:</p>
             
-            <div id="qrcode"></div>
+            <div class="reminder-btns">
+                <a id="appleLink" class="rem-btn apple-btn" download="Pnu-Goal.ics">أجهزة Apple 🍏</a>
+                <a id="googleLink" target="_blank" class="rem-btn google-btn">أجهزة Android / Google 🤖</a>
+            </div>
         </div>
 
-        <button onclick="goToStep3()">الانتقال لأسئلة الركن التفاعلية ➔</button>
+        <button onclick="goToStep3()">الأسئلة الشائعة لركن اسألني ➔</button>
     </div>
 
-    <!-- المرحلة 3: الأسئلة التفاعلية (بدون كتابة) -->
+    <!-- المرحلة 3: الأسئلة المتوقعة + مساحة حرّة لـ "اسألني" -->
     <div id="step3" class="step">
-        <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple);">اختاير ما يدور في ذهنكِ الآن لرؤية تجربة طالبات سابقة:</p>
+        <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple);">أسئلة تتكرر من الطالبات المستجدات (انقري لرؤية الإجابة):</p>
 
-        <div class="question-card" onclick="toggleAns(1)">💬 كيف كان أول موقف وأول خوف لطالبات سبقوكِ؟</div>
-        <div id="ans1" class="answer-box">💡 <strong>تجرِبة خريجة:</strong> "كنت أظن أنني الوحيدة المتوترة، حتى اكتشفت أن الجميع يشعر بنفس الشعور! السؤال والتواصل مع الأستاذات والزميلات اختصر علي نصف الطريق."</div>
+        <div class="question-card" onclick="toggleAns(1)">❓ كيف أكسر الخوف من أول تكليف أو تقديم جامعّي؟</div>
+        <div id="ans1" class="answer-box">💡 <strong>إجابة المجلس:</strong> الخوف طبيعي في المرات الأولى! قسّمي العمل لخطوات بسيطة واستعيني بالساعات المكتبية لأستاذة المادة.</div>
 
-        <div class="question-card" onclick="toggleAns(2)">🎯 ما هي أول نصيحة ذهبية للسنوات الأربع؟</div>
-        <div id="ans2" class="answer-box">💡 <strong>نصيحة المجلس:</strong> "لا تجعلي دراستك محصورة في القاعات فقط؛ شاركي في الأنشطة والأندية الطلابية من أول فصل لتبني شخصيتك وعلاقاتك."</div>
+        <div class="question-card" onclick="toggleAns(2)">❓ كيف أوازن بين المعدل وبين الأنشطة الطلابية؟</div>
+        <div id="ans2" class="answer-box">💡 <strong>إجابة المجلس:</strong> الأنشطة تصنع شخصيتكِ وتفتح لكِ الفرص، لكن تنظيم الوقت الأسبوعي هو السر للحفاظ على معدلكِ مرتفعاً.</div>
 
-        <button onclick="resetApp()" style="background: #6b21a8; margin-top: 15px;">طالبة جديدة (إعادة ضبط) 🔄</button>
+        <div class="question-card" onclick="toggleAns(3)">❓ حرّية السؤال: اسألي طالبات المجلس الموجودات بالركن الآن!</div>
+        <div id="ans3" class="answer-box">✨ <strong>نحن هنا لأجلكِ!</strong> وجهي سؤالك المباشر لعضوات المجلس الاستشاري الطلابي في الركن، وكلنا آذان صاغية.</div>
+
+        <button onclick="resetApp()" style="background: #4c1d95; margin-top: 15px;">طالبة جديدة (إعادة ضبط) 🔄</button>
     </div>
 </div>
 
@@ -209,35 +262,40 @@
         element.classList.add('selected');
     }
 
-    function goToStep2() {
+    function generatePlan() {
+        const goal = document.getElementById('userGoal').value.trim();
+
         if (!selectedMood) {
             alert("لطفاً اختاري شعوركِ أولاً لمتابعة البوصلة!");
             return;
         }
+        if (!goal) {
+            alert("لطفاً اكتبي حلمكِ أو هدفكِ للسنوات الأربع القادمة!");
+            return;
+        }
 
-        let advice = "";
-        if (selectedMood === "حماس") advice = "حماسك هو محركك الأول! استغليه بالانضمام للأنشطة الطلابية والتعرف على الكلية من الأسبوع الأول.";
-        else if (selectedMood === "توتر") advice = "التوتر شعور طبيعي جداً في البداية؛ ركزي على جدول الأسبوع الحالي وقسّمي التكليفات لخطوات بسيطة.";
-        else if (selectedMood === "فضول") advice = "الفضول بداية كل نجاح! استكشفي مرافق الجامعة واسألي عن الفرص والشهادات المتاحة لكِ.";
-        else advice = "تفاؤلكِ في محله! ابني عادات دراسية متوازنة واحرصي على بناء شبكة معارف مميزة.";
+        let moodAdvice = "";
+        if (selectedMood === "حماس") moodAdvice = "وجهي هذا الحماس فوراً للتعرف على أندية الكلية والبدء في بناء مهاراتك القيادية.";
+        else if (selectedMood === "توتر") moodAdvice = "التوتر أمر طبيعي جداً؛ ركزي على جدولكِ الأسبوعي الحالي وتذكري أن كل الخريجات بدأن من نفس النقطة.";
+        else if (selectedMood === "فضول") moodAdvice = "استكشفي مرافق الجامعة والشهادات المعتمدة المتاحة لتخصصكِ مبكراً.";
+        else moodAdvice = "تفاؤلكِ هو القوة التي ستوصلكِ للتميز؛ واظبي على الحضور والالتزام منذ اليوم الأول.";
 
-        document.getElementById('planOutput').innerHTML = `<strong>بوصلة زون البدايات (${selectedMood}):</strong><br>${advice}`;
+        const planHTML = `
+            <strong>خطة الوصول لحلم: (${goal}) 🎯</strong><br>
+            • <strong>خطوة الشعور (${selectedMood}):</strong> ${moodAdvice}<br>
+            • <strong>السنة الأولى:</strong> التركيز على المعرفة الأساسية وبناء المعدل الأكاديمي.<br>
+            • <strong>السنة الرابعة:</strong> التخرج والوصول لمرتبة (${goal}) بجدارة واستحقاق!
+        `;
 
-        // رابط تقويم مبسط جداً ليكون الباركود خفيفاً وسهل المسح
-        const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير زون 1 - البدايات')}`;
+        document.getElementById('planOutput').innerHTML = planHTML;
 
-        const qrContainer = document.getElementById('qrcode');
-        qrContainer.innerHTML = "";
-        
-        // إعداد باركود مبسط (Low Error Correction & Small Size) لضمان القراءة السريعة
-        new QRCode(qrContainer, {
-            text: calUrl,
-            width: 140,
-            height: 140,
-            colorDark : "#702b84",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.L
-        });
+        // إعداد رابط Google Calendar
+        const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير هدف: ' + goal)}&details=${encodeURIComponent('خطة الوصول: ' + moodAdvice)}`;
+        document.getElementById('googleLink').href = googleUrl;
+
+        // إعداد ملف Apple Reminders / Calendar (.ics)
+        const icsData = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:تذكير هدف البدايات: ${goal}\nDESCRIPTION:${moodAdvice}\nEND:VEVENT\nEND:VCALENDAR`;
+        document.getElementById('appleLink').href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsData);
 
         document.getElementById('step1').classList.remove('active');
         document.getElementById('step2').classList.add('active');
@@ -255,6 +313,7 @@
 
     function resetApp() {
         selectedMood = "";
+        document.getElementById('userGoal').value = "";
         document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
         document.querySelectorAll('.answer-box').forEach(a => a.style.display = 'none');
         document.getElementById('step3').classList.remove('active');
