@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوصلة المستقبل التفاعلية 🧭</title>
+    <title>Zone 1 - البدايات | المجلس الاستشاري الطلابي</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #f8fafc;
+            --pnu-purple: #702b84;
+            --pnu-pink: #d946ef;
+            --pnu-teal: #00838f;
+            --bg-gradient: linear-gradient(135deg, #fdf4ff 0%, #f3e8ff 100%);
             --card-bg: #ffffff;
-            --text: #1e293b;
-            --accent: #059669;
+            --text-color: #3b0764;
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,215 +28,213 @@
 
         .container {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            max-width: 500px;
+            padding: 30px 20px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(112, 43, 132, 0.12);
+            max-width: 450px;
             width: 100%;
             text-align: center;
+            border: 1px solid #f0abfc;
         }
 
+        .header-tag {
+            background: #fae8ff;
+            color: var(--pnu-purple);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        h1 { margin: 5px 0; color: var(--pnu-purple); font-size: 24px; font-weight: 800; }
+        .sub-title { color: #a855f7; font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+
         .step { display: none; }
-        .step.active { display: block; }
+        .step.active { display: block; animation: fadeIn 0.3s ease-in-out; }
 
-        h2 { margin-bottom: 10px; color: #0f172a; font-size: 22px; }
-        p { color: #64748b; line-height: 1.5; font-size: 15px; margin-bottom: 15px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
+        /* خيارات الشعور */
         .mood-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .mood-card {
-            background: #f1f5f9;
-            border: 2px solid transparent;
-            padding: 18px 10px;
-            border-radius: 14px;
+            background: #faf5ff;
+            border: 2px solid #f0abfc;
+            padding: 15px 8px;
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
+            color: var(--pnu-purple);
             transition: all 0.2s ease;
         }
 
         .mood-card:hover, .mood-card.selected {
-            border-color: var(--primary);
-            background: #eef2ff;
-            color: var(--primary);
-            transform: translateY(-2px);
+            background: var(--pnu-purple);
+            color: white;
+            border-color: var(--pnu-purple);
+            transform: scale(1.02);
         }
 
         button {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--pnu-purple), var(--pnu-pink));
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
             margin-top: 15px;
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(112, 43, 132, 0.2);
         }
 
-        button:hover { background-color: var(--primary-hover); }
-
         .plan-box {
-            background: #eef2ff;
-            border-right: 4px solid var(--primary);
+            background: #faf5ff;
+            border-right: 4px solid var(--pnu-purple);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: right;
             margin: 15px 0;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.6;
         }
 
         .qr-section {
-            background: #fafafa;
-            border: 1px dashed #cbd5e1;
+            background: #fff;
+            border: 2px dashed #f0abfc;
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 16px;
             margin: 15px 0;
         }
 
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            margin: 10px 0;
-        }
+        #qrcode { display: flex; justify-content: center; margin: 10px 0; }
 
-        .preset-questions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 12px 0;
-        }
-
-        .preset-btn {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: var(--text);
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
+        /* خيارات الأسئلة السريعة */
+        .question-card {
+            background: #faf5ff;
+            border: 1px solid #e9d5ff;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
             cursor: pointer;
             text-align: right;
-            transition: 0.2s;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--pnu-purple);
         }
 
-        .preset-btn:hover {
-            border-color: var(--primary);
-            background: #f8fafc;
-        }
-
-        textarea {
-            width: 100%;
-            height: 70px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
+        .answer-box {
+            background: #fff;
+            border: 1px solid #f0abfc;
             padding: 10px;
-            box-sizing: border-box;
-            margin-top: 8px;
-            font-family: inherit;
-            resize: none;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-align: right;
+            font-size: 12px;
+            display: none;
+            color: #4c1d95;
+            line-height: 1.5;
         }
     </style>
+    <!-- مكتبة الباركود المبسط -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
 <div class="container">
+    <div class="header-tag">المجلس الاستشاري الطلابي</div>
+    <h1>Zone 1 - البدايات 🧭</h1>
+    <div class="sub-title">"من هنا بدأنا.. ومشاعرك طبيعية"</div>
 
-    <!-- المرحلة 1: سؤال الشعور -->
+    <!-- المرحلة 1: اختيار الشعور -->
     <div id="step1" class="step active">
-        <h2>أهلاً بكِ في بوصلتكِ المستقبلية 🧭✨</h2>
-        <p>ما هو الشعور الأغلب عليكِ الآن في بداية هذه الرحلة؟</p>
+        <p style="font-size: 14px; color: #6b21a8;">ماذا تشعرين الآن في أول يوم لكِ بالرحلة الجامعية؟</p>
         
         <div class="mood-grid">
-            <div class="mood-card" onclick="selectMood('متحمسة', this)">🤩 متحمسة ومستعدة</div>
-            <div class="mood-card" onclick="selectMood('مشتتة', this)">🌀 مشتتة ومحتارة</div>
-            <div class="mood-card" onclick="selectMood('متخوفة', this)">تك متخوفة من التكليفات</div>
-            <div class="mood-card" onclick="selectMood('واثقة', this)">💪 طموحة وواثقة</div>
+            <div class="mood-card" onclick="selectMood('حماس', this)">✨ حماس ورغبة بالإنجاز</div>
+            <div class="mood-card" onclick="selectMood('توتر', this)">🌀 توتر وخوف من البداية</div>
+            <div class="mood-card" onclick="selectMood('فضول', this)">🔍 فضول واستكشاف</div>
+            <div class="mood-card" onclick="selectMood('تفاؤل', this)">🌸 تفاؤل وأمل بالفرص</div>
         </div>
 
-        <button onclick="goToStep2()">الانتقال للخطة والتذكير ➔</button>
+        <button onclick="goToStep2()">الانتقال للتذكير والبوصلة ➔</button>
     </div>
 
-    <!-- المرحلة 2: الخطة والتذكير والباركود -->
+    <!-- المرحلة 2: الخطة والتذكير بباركود خفيف ومبسط -->
     <div id="step2" class="step">
-        <h2>خطة العمل والتذكير بحلمكِ 🎯</h2>
-        
         <div id="planOutput" class="plan-box"></div>
 
         <div class="qr-section">
-            <h4 style="margin:0 0 5px 0;">تذكير الحلم في التقويم 📲</h4>
-            <p style="font-size: 13px; margin: 0;">امسحي الباركود لحفظ التذكير بحلمكِ وخطة وصولكِ مباشرة في تقويم جوالكِ:</p>
+            <h4 style="margin:0 0 5px 0; color:var(--pnu-purple);">حفظ تذكير "البدايات" 📲</h4>
+            <p style="font-size: 12px; color: #6b21a8; margin: 0 0 10px 0;">امسحي الباركود لحفظ رسالة البوصلة في تقويم جوالكِ مباشرة:</p>
+            
             <div id="qrcode"></div>
         </div>
 
-        <button onclick="goToStep3()">الانتقال لأسئلة ومشاركات الركن ➔</button>
+        <button onclick="goToStep3()">الانتقال لأسئلة الركن التفاعلية ➔</button>
     </div>
 
-    <!-- المرحلة 3: الركن التفاعلي والأسئلة -->
+    <!-- المرحلة 3: الأسئلة التفاعلية (بدون كتابة) -->
     <div id="step3" class="step">
-        <h2>المساحة التفاعلية للركن 💬</h2>
-        <p>هل لديكِ سؤال للسنوات المتقدمة أو تجربة تودين مشاركتها؟</p>
+        <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple);">اختاير ما يدور في ذهنكِ الآن لرؤية تجربة طالبات سابقة:</p>
 
-        <label style="font-size: 13px; font-weight: bold; display: block; text-align: right;">أو اختاري سؤالاً جاهزاً بضغطة زر:</label>
-        <div class="preset-questions">
-            <button class="preset-btn" onclick="usePreset('كيف أوازن بين المعدل العالي والأنشطة الطلابية؟')">💡 كيف أوازن بين المعدل العالي والأنشطة الطلابية؟</button>
-            <button class="preset-btn" onclick="usePreset('ما هي أفضل طريقة لتخطي رهبة أول فاينل/تكليف؟')">🎯 ما هي أفضل طريقة لتخطي رهبة أول تكليف جامعي؟</button>
-        </div>
+        <div class="question-card" onclick="toggleAns(1)">💬 كيف كان أول موقف وأول خوف لطالبات سبقوكِ؟</div>
+        <div id="ans1" class="answer-box">💡 <strong>تجرِبة خريجة:</strong> "كنت أظن أنني الوحيدة المتوترة، حتى اكتشفت أن الجميع يشعر بنفس الشعور! السؤال والتواصل مع الأستاذات والزميلات اختصر علي نصف الطريق."</div>
 
-        <textarea id="userQuestion" placeholder="أو اكتبي سؤالكِ الخاص هنا..."></textarea>
-        <button onclick="submitQuestion()" style="background-color: var(--accent);">إرسال للركن 🚀</button>
+        <div class="question-card" onclick="toggleAns(2)">🎯 ما هي أول نصيحة ذهبية للسنوات الأربع؟</div>
+        <div id="ans2" class="answer-box">💡 <strong>نصيحة المجلس:</strong> "لا تجعلي دراستك محصورة في القاعات فقط؛ شاركي في الأنشطة والأندية الطلابية من أول فصل لتبني شخصيتك وعلاقاتك."</div>
 
-        <button onclick="resetApp()" style="background-color: #475569; margin-top: 20px;">طالبة جديدة (إعادة ضبط) 🔄</button>
+        <button onclick="resetApp()" style="background: #6b21a8; margin-top: 15px;">طالبة جديدة (إعادة ضبط) 🔄</button>
     </div>
-
 </div>
 
 <script>
-    let chosenMood = "";
+    let selectedMood = "";
 
     function selectMood(mood, element) {
-        chosenMood = mood;
-        document.querySelectorAll('.mood-card').forEach(card => card.classList.remove('selected'));
+        selectedMood = mood;
+        document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
         element.classList.add('selected');
     }
 
     function goToStep2() {
-        if (!chosenMood) {
-            alert("لطفاً اختاري شعوركِ أولاً لمتابعة الخطوات!");
+        if (!selectedMood) {
+            alert("لطفاً اختاري شعوركِ أولاً لمتابعة البوصلة!");
             return;
         }
 
-        let planText = "";
-        if (chosenMood === "متحمسة") {
-            planText = `<strong>خطة الطاقة والحماس:</strong><br>• وجهي شغفكِ نحو الانضمام لأول نادٍ طلابي ينتمي لمجالكِ.<br>• ابني شبكة معارف مع طالبات السنوات الأخيرة من الأسبوع الأول.`;
-        } else if (chosenMood === "مشتتة") {
-            planText = `<strong>خطة تركيز الشتات:</strong><br>• ركزي فقط على جدول الأسبوع الحالي ولا تشغلي بالكِ بتكاليف النهاية.<br>• استخدمي تقويم الجوال لجدولة المواعيد فور استلامها.`;
-        } else if (chosenMood === "متخوفة") {
-            planText = `<strong>خطة الطمأنينة والإنجاز:</strong><br>• الخوف طبيعي جداً؛ قسّمي كل مشروع إلى خطوات صغيرة جداً.<br>• اسألي أستاذة المادة في الساعات المكتبية فور وجود أي نقطة غير واضحة.`;
-        } else {
-            planText = `<strong>خطة الاستمرار والتميز:</strong><br>• حافظي على التوازن بين صحتكِ ونومكِ وبين التحصيل العلمي.<br>• ابدئي بالاطلاع على الشهادات المهنية المعتمدة لمجالكِ المستقبلي.`;
-        }
+        let advice = "";
+        if (selectedMood === "حماس") advice = "حماسك هو محركك الأول! استغليه بالانضمام للأنشطة الطلابية والتعرف على الكلية من الأسبوع الأول.";
+        else if (selectedMood === "توتر") advice = "التوتر شعور طبيعي جداً في البداية؛ ركزي على جدول الأسبوع الحالي وقسّمي التكليفات لخطوات بسيطة.";
+        else if (selectedMood === "فضول") advice = "الفضول بداية كل نجاح! استكشفي مرافق الجامعة واسألي عن الفرص والشهادات المتاحة لكِ.";
+        else advice = "تفاؤلكِ في محله! ابني عادات دراسية متوازنة واحرصي على بناء شبكة معارف مميزة.";
 
-        document.getElementById('planOutput').innerHTML = planText;
+        document.getElementById('planOutput').innerHTML = `<strong>بوصلة زون البدايات (${selectedMood}):</strong><br>${advice}`;
 
-        // توليد باركود التذكير بـ Google Calendar
-        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير هدف البوصلة')}&details=${encodeURIComponent(planText.replace(/<br>/g, ' '))}`;
-        
+        // رابط تقويم مبسط جداً ليكون الباركود خفيفاً وسهل المسح
+        const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير زون 1 - البدايات')}`;
+
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
+        
+        // إعداد باركود مبسط (Low Error Correction & Small Size) لضمان القراءة السريعة
         new QRCode(qrContainer, {
-            text: calendarUrl,
-            width: 160,
-            height: 160,
-            colorDark : "#0f172a",
+            text: calUrl,
+            width: 140,
+            height: 140,
+            colorDark : "#702b84",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         });
@@ -250,24 +248,15 @@
         document.getElementById('step3').classList.add('active');
     }
 
-    function usePreset(questionText) {
-        document.getElementById('userQuestion').value = questionText;
-    }
-
-    function submitQuestion() {
-        const q = document.getElementById('userQuestion').value.trim();
-        if (q) {
-            alert("شكراً لمشاركتكِ! تم استلام سؤالكِ في الركن بنجاح ✨");
-            document.getElementById('userQuestion').value = "";
-        } else {
-            alert("لطفاً اكتبي سؤالاً أو اختاري أحد الأسئلة المقترحة أولاً.");
-        }
+    function toggleAns(num) {
+        const el = document.getElementById('ans' + num);
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
     }
 
     function resetApp() {
-        chosenMood = "";
-        document.querySelectorAll('.mood-card').forEach(card => card.classList.remove('selected'));
-        document.getElementById('userQuestion').value = "";
+        selectedMood = "";
+        document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.answer-box').forEach(a => a.style.display = 'none');
         document.getElementById('step3').classList.remove('active');
         document.getElementById('step2').classList.remove('active');
         document.getElementById('step1').classList.add('active');
