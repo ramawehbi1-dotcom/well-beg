@@ -27,7 +27,6 @@
             position: relative;
         }
 
-        /* خلفيات حركية هادئة */
         .bg-shape {
             position: absolute;
             border-radius: 50%;
@@ -57,19 +56,8 @@
             z-index: 1;
         }
 
-        .badges-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .badge {
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+        .badges-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; }
+        .badge { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; }
         .badge-purple { background: var(--pnu-purple); color: white; }
         .badge-teal { background: var(--pnu-teal); color: white; }
 
@@ -84,14 +72,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* شبكة بطاقات المشاعر */
-        .mood-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 15px 0;
-        }
-
+        .mood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
         .mood-card {
             background: #ffffff;
             border: 2px solid #f0abfc;
@@ -153,13 +134,7 @@
             line-height: 1.6;
         }
 
-        /* أزرار اختيار نوع النظام لإنشاء الباركود */
-        .device-selector {
-            display: flex;
-            gap: 10px;
-            margin: 12px 0;
-        }
-
+        .device-selector { display: flex; gap: 10px; margin: 12px 0; }
         .device-btn {
             flex: 1;
             padding: 12px 8px;
@@ -173,13 +148,8 @@
             color: var(--pnu-purple);
         }
 
-        .device-btn.active {
-            background: var(--pnu-purple);
-            color: white;
-            border-color: var(--pnu-pink);
-        }
+        .device-btn.active { background: var(--pnu-purple); color: white; border-color: var(--pnu-pink); }
 
-        /* نافذة الباركود المعروض على الشاشة */
         .qr-display-area {
             background: #ffffff;
             border: 2px dashed #f0abfc;
@@ -192,7 +162,6 @@
 
         #qrcode { display: flex; justify-content: center; margin: 10px 0; }
 
-        /* الأسئلة والتفاعلات */
         .question-card {
             background: #ffffff;
             border: 1px solid #e9d5ff;
@@ -222,8 +191,6 @@
             line-height: 1.5;
         }
     </style>
-
-    <!-- مكتبة توليد الباركود -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
@@ -240,7 +207,7 @@
     <h1>من هنا بدأنا 🧭</h1>
     <div class="sub-title">المجلس الاستشاري الطلابي - جامعة الأميرة نورة</div>
 
-    <!-- المرحلة 1: المشاعر والهدف -->
+    <!-- المرحلة 1 -->
     <div id="step1" class="step active">
         <p style="font-size: 13px; font-weight: bold; margin-bottom: 5px;">كيف تشعرين اليوم في بداية رحلتكِ؟</p>
         
@@ -261,7 +228,7 @@
         <button onclick="generatePlan()">توليد الخطة والبوصلة ➔</button>
     </div>
 
-    <!-- المرحلة 2: اختيار جهاز الطالبة لعرض الباركود المناسب لها -->
+    <!-- المرحلة 2 -->
     <div id="step2" class="step">
         <div id="planOutput" class="plan-box"></div>
 
@@ -282,7 +249,7 @@
         <button onclick="goToStep3()" style="margin-top: 15px;">الانتقال لأسئلة ركن اسألني ➔</button>
     </div>
 
-    <!-- المرحلة 3: الأسئلة التفاعلية -->
+    <!-- المرحلة 3 -->
     <div id="step3" class="step">
         <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple);">أسئلة تتكرر من الطالبات المستجدات (اضغطي للجواب):</p>
 
