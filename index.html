@@ -3,383 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zone 1 - البدايات | حملة اسألني ASK ME 🧭</title>
+    <title>بوصلة الشغف والهدف</title>
     <style>
         :root {
-            --pnu-purple: #702b84;
-            --pnu-pink: #d946ef;
-            --pnu-teal: #00838f;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-color: #3b0764;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: radial-gradient(circle at 10% 20%, #fae8ff 0%, #f3e8ff 40%, #e0e7ff 90%);
-            color: var(--text-color);
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 15px;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        .bg-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            z-index: 0;
-            animation: floatShape 8s infinite alternate ease-in-out;
-        }
-        .shape1 { width: 220px; height: 220px; background: rgba(217, 70, 239, 0.25); top: 5%; left: 5%; }
-        .shape2 { width: 250px; height: 250px; background: rgba(0, 131, 143, 0.2); bottom: 5%; right: 5%; }
-
-        @keyframes floatShape {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-25px) rotate(10deg); }
+            padding: 20px;
         }
 
         .container {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            padding: 30px 22px;
-            border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(112, 43, 132, 0.18);
-            max-width: 480px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 500px;
             width: 100%;
             text-align: center;
-            border: 2px solid rgba(240, 171, 252, 0.6);
-            position: relative;
-            z-index: 1;
         }
-
-        .badges-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; }
-        .badge { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .badge-purple { background: var(--pnu-purple); color: white; }
-        .badge-teal { background: var(--pnu-teal); color: white; }
-
-        h1 { margin: 5px 0; color: var(--pnu-purple); font-size: 24px; font-weight: 800; }
-        .sub-title { color: #a855f7; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
 
         .step { display: none; }
-        .step.active { display: block; animation: slideIn 0.35s ease-out; }
+        .step.active { display: block; }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .mood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
-        .mood-card {
-            background: #ffffff;
-            border: 2px solid #f0abfc;
-            padding: 12px 6px;
-            border-radius: 14px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--pnu-purple);
-            transition: all 0.25s ease;
-        }
-
-        .mood-card:hover, .mood-card.selected {
-            background: var(--pnu-purple);
-            color: white;
-            border-color: var(--pnu-purple);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 18px rgba(112, 43, 132, 0.25);
-        }
+        h2 { margin-bottom: 20px; color: #0f172a; }
+        p { color: #64748b; line-height: 1.6; }
 
         input[type="text"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid #f0abfc;
-            border-radius: 12px;
-            font-size: 13px;
+            margin: 15px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
             box-sizing: border-box;
-            margin: 8px 0 12px 0;
-            outline: none;
-            text-align: center;
-            background: #fff;
+            font-size: 16px;
         }
 
-        button {
-            background: linear-gradient(135deg, var(--pnu-purple), var(--pnu-pink));
+        button, .btn-link {
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 13px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
             width: 100%;
+            transition: background 0.2s;
             margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(112, 43, 132, 0.3);
-            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
-        button:hover { transform: translateY(-2px); }
+        button:hover, .btn-link:hover { background-color: var(--primary-hover); }
 
-        .plan-box {
-            background: #faf5ff;
-            border-right: 4px solid var(--pnu-purple);
+        .compass-result {
+            background: #eef2ff;
+            border-right: 4px solid var(--primary);
             padding: 15px;
-            border-radius: 12px;
+            border-radius: 8px;
             text-align: right;
+            margin: 20px 0;
+        }
+
+        .qr-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
             margin: 15px 0;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        .device-selector { display: flex; gap: 10px; margin: 12px 0; }
-        .device-btn {
-            flex: 1;
-            padding: 12px 8px;
-            border-radius: 12px;
-            border: 2px solid transparent;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            background: #f3e8ff;
-            color: var(--pnu-purple);
-        }
-
-        .device-btn.active { background: var(--pnu-purple); color: white; border-color: var(--pnu-pink); }
-
-        .qr-display-area {
-            background: #ffffff;
-            border: 2px dashed #f0abfc;
-            padding: 15px;
-            border-radius: 16px;
-            margin-top: 10px;
-            display: none;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        #qrcode { display: flex; justify-content: center; margin: 10px 0; }
-
-        .question-card {
-            background: #ffffff;
-            border: 1px solid #e9d5ff;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            text-align: right;
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--pnu-purple);
-            transition: 0.25s;
-        }
-
-        .question-card:hover { background: #fae8ff; border-color: var(--pnu-purple); }
-
-        .answer-box {
-            background: #ffffff;
-            border: 1px solid #f0abfc;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            text-align: right;
-            font-size: 12px;
-            display: none;
-            color: #4c1d95;
-            line-height: 1.5;
         }
     </style>
+    <!-- مكتبة توليد الباركود -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 
-<div class="bg-shape shape1"></div>
-<div class="bg-shape shape2"></div>
-
 <div class="container">
-    <div class="badges-container">
-        <span class="badge badge-purple">Zone 1 - البدايات</span>
-        <span class="badge badge-teal">حملة اسألني ASK ME ❓</span>
-    </div>
-    
-    <h1>من هنا بدأنا 🧭</h1>
-    <div class="sub-title">المجلس الاستشاري الطلابي - جامعة الأميرة نورة</div>
-
-    <!-- المرحلة 1 -->
+    <!-- الخطوة 1 -->
     <div id="step1" class="step active">
-        <p style="font-size: 13px; font-weight: bold; margin-bottom: 5px;">كيف تشعرين اليوم في بداية رحلتكِ؟</p>
-        
-        <div class="mood-grid">
-            <div class="mood-card" onclick="selectMood('حماس', this)">✨ حماس</div>
-            <div class="mood-card" onclick="selectMood('توتر', this)">🌀 توتر</div>
-            <div class="mood-card" onclick="selectMood('فضول', this)">🔍 فضول</div>
-            <div class="mood-card" onclick="selectMood('تفاؤل', this)">🌸 تفاؤل</div>
-            <div class="mood-card" onclick="selectMood('خوف', this)">تك خوف</div>
-            <div class="mood-card" onclick="selectMood('تردد', this)">🤔 تردد</div>
-        </div>
-
-        <input type="text" id="customMood" placeholder="أو اكتبي شعوركِ هنا إن لم تجديه..." oninput="clearMoodCards()">
-
-        <p style="font-size: 13px; font-weight: bold; margin-top: 10px; margin-bottom: 2px;">ما هو هدفكِ أو حلمكِ بعد 4 سنوات؟ (اختياري)</p>
-        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، أو اتركيها فارغة للاستكشاف...">
-
-        <button onclick="generatePlan()">توليد الخطة والبوصلة ➔</button>
+        <h2>أهلاً بك في بوصلة المستقبل 🧭</h2>
+        <p>هل أنت مستعد لمواجهة تحديات التحول واكتشاف مسارك الحقيقي؟</p>
+        <button onclick="nextStep(2)">نعم، أنا مستعد تماماً!</button>
     </div>
 
-    <!-- المرحلة 2 -->
+    <!-- الخطوة 2 -->
     <div id="step2" class="step">
-        <div id="planOutput" class="plan-box"></div>
-
-        <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple); margin-bottom: 5px;">امسحي الباركود بجوالكِ لحفظ التذكير 📲</p>
-
-        <div class="device-selector">
-            <button class="device-btn" id="btnApple" onclick="generateDeviceQR('apple')">أجهزة Apple 🍏</button>
-            <button class="device-btn" id="btnAndroid" onclick="generateDeviceQR('android')">أجهزة Android / Google 🤖</button>
-        </div>
-
-        <div id="qrDisplay" class="qr-display-area">
-            <p id="qrNoticeText" style="font-size: 12px; font-weight: bold; color: var(--pnu-purple); margin: 0;"></p>
-            <div id="qrcode"></div>
-            <p style="font-size: 11px; color: #666; margin: 0;">وجهي كاميرا الجوال نحو الشاشة للمسح المباشر</p>
-        </div>
-
-        <button onclick="goToStep3()" style="margin-top: 15px;">الانتقال لأسئلة ركن اسألني ➔</button>
+        <h2>رؤيتك القادمة ✨</h2>
+        <p>أين تتمنى أن تكون وماذا تريد أن تحقق بعد **أربع سنوات** من الآن؟</p>
+        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال..." required>
+        <button onclick="generateCompass()">توليد بوصلة النصائح 🪄</button>
     </div>
 
-    <!-- المرحلة 3 -->
+    <!-- الخطوة 3 -->
     <div id="step3" class="step">
-        <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple);">أسئلة تتكرر من الطالبات المستجدات (اضغطي للجواب):</p>
+        <h2>بوصلتك الشخصية 🧭</h2>
+        <div id="compassOutput" class="compass-result"></div>
 
-        <div class="question-card" onclick="toggleAns(1)">❓ كيف أكسر الخوف من أول تقديم أو تكليف؟</div>
-        <div id="ans1" class="answer-box">💡 <strong>إجابة المجلس:</strong> الخوف طبيعي في المرات الأولى! قسّمي العمل لخطوات بسيطة واستعيني بالساعات المكتبية للأستاذة.</div>
+        <div class="qr-section">
+            <h3>حفظ التذكير في التقويم 📲</h3>
+            <p style="font-size: 14px;">امسح الباركود بالكاميرا لفتح صفحة إضافة التذكير مباشرة إلى تقويمك:</p>
+            
+            <div id="qrcode"></div>
 
-        <div class="question-card" onclick="toggleAns(2)">❓ كيف أوازن بين المعدل وبين الأنشطة الطلابية؟</div>
-        <div id="ans2" class="answer-box">💡 <strong>إجابة المجلس:</strong> الأنشطة تصنع شخصيتكِ وتفتح لكِ الفرص، ولكن تنظيم الوقت الأسبوعي هو السر للحفاظ على المعدل.</div>
+            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">فتح التقويم وحفظ التذكير مباشرة 📅</a>
+        </div>
 
-        <div class="question-card" onclick="toggleAns(3)">❓ حريّة السؤال: اسألي طالبات المجلس الموجودات بالركن الآن!</div>
-        <div id="ans3" class="answer-box">✨ <strong>نحن هنا لأجلكِ!</strong> وجهي سؤالكِ المباشر لعضوات المجلس الاستشاري الطلابي في الركن، وكلنا آذان صاغية.</div>
-
-        <button onclick="resetApp()" style="background: #4c1d95; margin-top: 15px;">طالبة جديدة (إعادة ضبط الشاشة) 🔄</button>
+        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة 🔄</button>
     </div>
 </div>
 
 <script>
-    let selectedMood = "";
-    let globalGoalText = "";
-    let globalAdvice = "";
-
-    function selectMood(mood, element) {
-        selectedMood = mood;
-        document.getElementById('customMood').value = "";
-        document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
-        element.classList.add('selected');
+    function nextStep(stepNumber) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById('step' + stepNumber).classList.add('active');
     }
 
-    function clearMoodCards() {
-        selectedMood = "";
-        document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
-    }
-
-    function generatePlan() {
-        const customMood = document.getElementById('customMood').value.trim();
-        const finalMood = customMood || selectedMood;
-        const rawGoal = document.getElementById('userGoal').value.trim();
-
-        if (!finalMood) {
-            alert("لطفاً اختاري شعوركِ أو اكتبي شعوركِ المخصص لمتابعة البوصلة!");
+    function generateCompass() {
+        const goal = document.getElementById('userGoal').value.trim();
+        if (!goal) {
+            alert("لطفاً اكتب هدفك للسنوات الأربع القادمة لنتمكن من بناء البوصلة.");
             return;
         }
 
-        const noGoalKeywords = ["لا يوجد", "ما عندي", "لا اعلم", "ما ادري", "بدون", "لا ادري", "لاشيء", "لا شيء"];
-        const hasNoGoal = !rawGoal || noGoalKeywords.some(kw => rawGoal.includes(kw));
+        const adviceList = [
+            `الوصول إلى "${goal}" يتطلب الاستمرارية اليومية وليس فقط الشغف المؤقت.`,
+            `ركز خلال السنة الأولى على بناء المهارات الأساسية التي تجعلك خبيراً في مجالك.`,
+            `اجعل كل قرار تتخذه اليوم يخدم الصورة التي تريد أن تكون عليها بعد 4 سنوات.`
+        ];
 
-        if (finalMood === "حماس") globalAdvice = "وجهي هذا الحماس لتجربة الأنشطة الطلابية والبدء في اكتشاف مهاراتكِ الكامنة.";
-        else if (finalMood === "توتر" || finalMood === "خوف") globalAdvice = "التوتر طبيعي جداً؛ ركزي على جدولكِ الحالي وتذكري أن عدم وضوح الهدف الآن لا يمنع نجاحكِ مستقبلاً.";
-        else if (finalMood === "فضول") globalAdvice = "استكشفي التخصصات والمجالات المتاحة لكِ في الجامعة لتحديد ما يستهويكِ.";
-        else globalAdvice = "ركزي على بناء معدل قوي في السنة الأولى؛ فهو المرتكز الذي يمنحكِ حرية الاختيار مستقبلاً.";
+        document.getElementById('compassOutput').innerHTML = `
+            <strong>خطة البوصلة للوصول لـ (${goal}):</strong>
+            <ul>
+                <li>${adviceList[0]}</li>
+                <li>${adviceList[1]}</li>
+                <li>${adviceList[2]}</li>
+            </ul>
+        `;
 
-        let planHTML = "";
-
-        if (hasNoGoal) {
-            globalGoalText = "رحلة اكتشاف الذات والهدف";
-            planHTML = `
-                <strong>خطة استكشاف الشغف والهدف 🧭</strong><br>
-                • <strong>شعورك الحالي (${finalMood}):</strong> ${globalAdvice}<br>
-                • <strong>السنة الأولى:</strong> التركيز على بناء معدل مرتفع والتجربة في الأندية الطلابية لاكتشاف ميولكِ.<br>
-                • <strong>السنة الرابعة:</strong> التخرج برؤية واضحة ومسار محدد تم اختياره بعناية!
-            `;
-        } else {
-            globalGoalText = rawGoal;
-            planHTML = `
-                <strong>خطة الوصول لـ (${rawGoal}) 🎯</strong><br>
-                • <strong>شعورك الحالي (${finalMood}):</strong> ${globalAdvice}<br>
-                • <strong>السنة الأولى:</strong> بناء حصيلة معرفية متينة والحفاظ على التفوق الأكاديمي.<br>
-                • <strong>السنة الرابعة:</strong> التخرج والوصول لمرتبة (${rawGoal}) بجدارة واستحقاق!
-            `;
-        }
-
-        document.getElementById('planOutput').innerHTML = planHTML;
-        document.getElementById('step1').classList.remove('active');
-        document.getElementById('step2').classList.add('active');
+        setupCalendarEvent(goal, adviceList[0]);
+        nextStep(3);
     }
 
-    function generateDeviceQR(type) {
-        document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
-        const displayArea = document.getElementById('qrDisplay');
-        const qrNotice = document.getElementById('qrNoticeText');
+    function setupCalendarEvent(goal, advice) {
+        // إنشاء رابط تقويم ويب قياسي يتعرف عليه الجوال فوراً
+        const title = encodeURIComponent(`تذكير البوصلة: ${goal}`);
+        const details = encodeURIComponent(`نصيحة البوصلة: ${advice}`);
+        
+        // رابط تقويم Google المباشر (تفتح كصفحة ويب عند مسح الباركود)
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
+
+        // 1. تحديث زر الضغط المباشر
+        const calendarBtn = document.getElementById('directCalendarLink');
+        calendarBtn.href = calendarUrl;
+
+        // 2. توليد الباركود ليحتوي على رابط الويب الصريح
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
 
-        // استخدام رابط تقويم موحد يفتح في iOS وأندرويد بسلاسة وبدون أخطاء
-        const title = encodeURIComponent('تذكير البدايات: ' + globalGoalText);
-        const details = encodeURIComponent('خطة البوصلة: ' + globalAdvice);
-        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
-
-        if (type === 'apple') {
-            document.getElementById('btnApple').classList.add('active');
-            qrNotice.innerText = "🍏 باركود أجهزة أبل (iPhone/iPad):";
-        } else {
-            document.getElementById('btnAndroid').classList.add('active');
-            qrNotice.innerText = "🤖 باركود أجهزة أندرويد و Google:";
-        }
-
         new QRCode(qrContainer, {
             text: calendarUrl,
-            width: 160,
-            height: 160,
-            colorDark : "#702b84",
+            width: 180,
+            height: 180,
+            colorDark : "#1e293b",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         });
-
-        displayArea.style.display = 'block';
-    }
-
-    function goToStep3() {
-        document.getElementById('step2').classList.remove('active');
-        document.getElementById('step3').classList.add('active');
-    }
-
-    function toggleAns(num) {
-        const el = document.getElementById('ans' + num);
-        el.style.display = el.style.display === 'block' ? 'none' : 'block';
     }
 
     function resetApp() {
-        selectedMood = "";
-        globalGoalText = "";
-        globalAdvice = "";
-        document.getElementById('customMood').value = "";
         document.getElementById('userGoal').value = "";
-        document.getElementById('qrDisplay').style.display = 'none';
-        document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('selected'));
-        document.querySelectorAll('.answer-box').forEach(a => a.style.display = 'none');
-        document.getElementById('step3').classList.remove('active');
-        document.getElementById('step2').classList.remove('active');
-        document.getElementById('step1').classList.add('active');
+        nextStep(1);
     }
 </script>
 
