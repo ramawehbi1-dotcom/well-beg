@@ -1,199 +1,509 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوصلة الشغف والهدف</title>
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Zone 1 - البدايات | اسألني ASK ME</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-deep:#0A343B;
+    --teal-deep2:#0E4750;
+    --teal:#1B98A4;
+    --teal-bright:#1FC9B7;
+    --purple:#6C4AB6;
+    --purple-2:#7C56C9;
+    --purple-3:#5A3FA0;
+    --pink:#E14F94;
+    --pink-2:#F06FA8;
+    --pink-3:#C24E9E;
+    --cream:#FDF9F6;
+    --ink:#1B222B;
+    --ink-soft:rgba(253,249,246,.72);
+    --ink-faint:rgba(253,249,246,.42);
+    --ring-track: rgba(253,249,246,.14);
+    --shadow: 0 18px 45px rgba(6,25,29,.35);
+    --ease: cubic-bezier(.22,.9,.32,1);
+  }
 
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Tajawal', 'Segoe UI', sans-serif;
+    color:var(--cream);
+    background:
+      radial-gradient(1100px 700px at 82% -10%, rgba(124,86,201,.35), transparent 60%),
+      radial-gradient(900px 650px at -10% 15%, rgba(225,79,148,.22), transparent 55%),
+      linear-gradient(160deg, var(--teal-deep) 0%, var(--teal-deep2) 55%, #0A2E33 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
 
-        .container {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
+  /* ---------- ambient nebula texture ---------- */
+  .nebula{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  }
+  .nebula span{
+    position:absolute; border-radius:50%;
+    filter: blur(60px); opacity:.28;
+    animation: drift 24s ease-in-out infinite;
+  }
+  .nebula span:nth-child(1){width:420px;height:420px; background:var(--purple); top:-10%; right:-8%; animation-duration:26s;}
+  .nebula span:nth-child(2){width:360px;height:360px; background:var(--teal-bright); bottom:-12%; left:-10%; animation-duration:30s; animation-delay:-6s;}
+  .nebula span:nth-child(3){width:280px;height:280px; background:var(--pink); top:45%; left:60%; animation-duration:22s; animation-delay:-3s;}
+  @keyframes drift{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-30px,25px) scale(1.08); }
+  }
 
-        .step { display: none; }
-        .step.active { display: block; }
+  .app{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
 
-        h2 { margin-bottom: 20px; color: #0f172a; }
-        p { color: #64748b; line-height: 1.6; }
+  /* ---------- top bar ---------- */
+  header.bar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(18px,4vw,48px) 10px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .mark{
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(135deg,var(--purple),var(--pink));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(225,79,148,.35);
+    flex:none;
+  }
+  .brand .mark svg{ width:19px; height:19px; }
+  .brand .txt{ line-height:1.05; }
+  .brand .txt b{ display:block; font-weight:800; font-size:15px; letter-spacing:.2px;}
+  .brand .txt span{ display:block; font-size:10.5px; color:var(--ink-faint); letter-spacing:2px; }
+  .zone-pill{
+    font-size:12.5px; font-weight:700; color:var(--ink-soft);
+    border:1px solid rgba(253,249,246,.22); padding:7px 16px; border-radius:999px;
+    backdrop-filter: blur(6px);
+  }
+  .zone-pill em{ font-style:normal; color:var(--teal-bright); }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+  main{ flex:1; display:flex; align-items:center; justify-content:center; padding:10px 16px 40px; }
 
-        button, .btn-link {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-            margin-top: 10px;
-            display: inline-block;
-            text-decoration: none;
-            box-sizing: border-box;
-        }
+  .screen{ width:100%; max-width:980px; display:none; animation: fadeUp .55s var(--ease); }
+  .screen.active{ display:block; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
 
-        button:hover, .btn-link:hover { background-color: var(--primary-hover); }
+  /* ================= SCREEN 1 — CHOOSE ================= */
+  .hero{ text-align:center; margin-bottom:8px; }
+  .hero .eyebrow{
+    font-size:13px; letter-spacing:3px; color:var(--teal-bright); font-weight:700;
+    text-transform:none; margin-bottom:10px;
+  }
+  .hero h1{
+    font-size:clamp(28px,5vw,44px); margin:0 0 10px; font-weight:900; letter-spacing:.2px;
+    background:linear-gradient(90deg,#fff, #EFE7FF 40%, #fff);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p{ margin:0 auto; max-width:520px; color:var(--ink-soft); font-size:15.5px; line-height:1.8; }
 
-        .compass-result {
-            background: #eef2ff;
-            border-right: 4px solid var(--primary);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: right;
-            margin: 20px 0;
-        }
+  .grid{
+    margin-top:34px; display:flex; flex-wrap:wrap; justify-content:center; gap:18px 16px;
+    max-width:820px; margin-inline:auto;
+  }
+  .bubble{
+    --c: var(--teal);
+    all:unset; cursor:pointer;
+    width:132px; height:132px; border-radius:32px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    background: linear-gradient(155deg, color-mix(in srgb, var(--c) 22%, transparent), color-mix(in srgb, var(--c) 6%, transparent));
+    border:1.5px solid color-mix(in srgb, var(--c) 55%, transparent);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s;
+    animation: bob 6s ease-in-out infinite;
+    position:relative;
+  }
+  .bubble:nth-child(odd){ animation-duration:7s; }
+  .bubble:nth-child(3n){ animation-delay:-2.3s; }
+  .bubble:nth-child(4n){ animation-delay:-4.1s; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
 
-        .qr-section {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #cbd5e1;
-            border-radius: 8px;
-            background: #fafafa;
-        }
+  .bubble:hover, .bubble:focus-visible{
+    transform:translateY(-10px) scale(1.05);
+    background: linear-gradient(155deg, color-mix(in srgb, var(--c) 38%, transparent), color-mix(in srgb, var(--c) 12%, transparent));
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--c) 45%, transparent);
+    outline:none;
+  }
+  .bubble .ic{ width:30px; height:30px; color:color-mix(in srgb, var(--c) 70%, white); }
+  .bubble .ic svg{ width:100%; height:100%; }
+  .bubble .lb{ font-size:14.5px; font-weight:700; color:#fff; }
 
-        #qrcode {
-            display: flex;
-            justify-content: center;
-            margin: 15px 0;
-        }
-    </style>
-    <!-- مكتبة توليد الباركود -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  .foot-note{
+    margin-top:34px; text-align:center; font-size:12.5px; color:var(--ink-faint);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .foot-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--teal-bright); animation:pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:.4;} 50%{opacity:1;} }
+
+  /* ================= SCREEN 2 — RESULT / GALAXY ================= */
+  .result{ position:relative; }
+  .galaxy{
+    position:absolute; inset:-40px -16px auto -16px; height:520px; z-index:0;
+    overflow:hidden; border-radius:28px;
+    pointer-events:none;
+  }
+  .star{
+    position:absolute; border-radius:50%;
+    animation: twinkle 3.4s ease-in-out infinite, floaty 14s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.25;} 50%{opacity:.9;} }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0) translateX(0);} 50%{ transform:translateY(-14px) translateX(6px);} }
+  .star.new{ animation: pop .7s var(--ease), twinkle 3.4s ease-in-out infinite .7s, floaty 14s ease-in-out infinite; }
+  @keyframes pop{ 0%{ transform:scale(0); opacity:0;} 60%{ transform:scale(1.5); opacity:1;} 100%{ transform:scale(1);} }
+
+  .result-card{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1fr; gap:26px;
+    justify-items:center; text-align:center; padding:30px 18px 10px;
+  }
+  .orb-wrap{ position:relative; width:190px; height:190px; }
+  .orb{
+    width:190px; height:190px; border-radius:50%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, white 10%), color-mix(in srgb, var(--c) 85%, black 10%) 70%);
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--c) 14%, transparent), 0 20px 60px color-mix(in srgb, var(--c) 55%, transparent);
+    animation: orbPulse 3s ease-in-out infinite;
+  }
+  @keyframes orbPulse{ 0%,100%{ box-shadow:0 0 0 10px color-mix(in srgb, var(--c) 14%, transparent), 0 20px 60px color-mix(in srgb, var(--c) 55%, transparent);} 50%{ box-shadow:0 0 0 18px color-mix(in srgb, var(--c) 8%, transparent), 0 26px 70px color-mix(in srgb, var(--c) 65%, transparent);} }
+  .orb .ic{ width:44px; height:44px; color:#fff; }
+  .orb .ic svg{ width:100%; height:100%; }
+  .orb .lb{ font-size:19px; font-weight:800; color:#fff; }
+
+  .stat{ max-width:480px; }
+  .stat .ring-num{ font-size:52px; font-weight:900; line-height:1; }
+  .stat .ring-num small{ font-size:22px; font-weight:800; margin-inline-end:2px; }
+  .stat p{ margin:10px 0 0; color:var(--ink-soft); font-size:15px; line-height:1.9; }
+  .stat p b{ color:#fff; }
+
+  .msg-line{
+    max-width:520px; font-size:14.5px; color:var(--ink-soft); line-height:1.9;
+    border-top:1px solid rgba(253,249,246,.14); padding-top:16px; margin-top:4px;
+  }
+
+  .actions{ display:flex; align-items:center; gap:14px; margin-top:6px; }
+  .btn-next{
+    all:unset; cursor:pointer; padding:13px 34px; border-radius:999px; font-weight:800; font-size:15px;
+    background:linear-gradient(90deg,var(--teal-bright), var(--teal));
+    color:#06282c; box-shadow:0 12px 26px rgba(31,201,183,.32);
+    transition:transform .2s var(--ease);
+  }
+  .btn-next:hover{ transform:translateY(-3px); }
+
+  .progress-wrap{ width:180px; height:4px; border-radius:99px; background:rgba(253,249,246,.15); overflow:hidden; }
+  .progress-bar{ height:100%; background:var(--teal-bright); width:100%; transform-origin:right; animation: shrink 12s linear forwards; }
+  @keyframes shrink{ from{ transform:scaleX(1);} to{ transform:scaleX(0);} }
+
+  /* ---------- admin / coordinator reset ---------- */
+  .admin{
+    position:fixed; bottom:14px; left:14px; z-index:5;
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(253,249,246,.06); border:1px solid rgba(253,249,246,.14);
+    color:var(--ink-faint); cursor:pointer; transition:.2s;
+  }
+  .admin:hover{ opacity:1; background:rgba(253,249,246,.12); }
+  .admin svg{ width:16px; height:16px; }
+
+  .modal-veil{
+    position:fixed; inset:0; background:rgba(5,20,23,.72); backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:20; padding:20px;
+  }
+  .modal-veil.show{ display:flex; }
+  .modal{
+    background:var(--teal-deep2); border:1px solid rgba(253,249,246,.16); border-radius:20px;
+    padding:26px; max-width:340px; text-align:center; box-shadow:var(--shadow);
+  }
+  .modal p{ font-size:14px; color:var(--ink-soft); line-height:1.8; margin:0 0 18px; }
+  .modal .row{ display:flex; gap:10px; }
+  .modal button{ all:unset; flex:1; text-align:center; padding:10px; border-radius:12px; font-weight:700; font-size:13.5px; cursor:pointer; }
+  .modal .cancel{ background:rgba(253,249,246,.08); color:var(--ink-soft); }
+  .modal .confirm{ background:var(--pink); color:#fff; }
+
+  footer.credit{ text-align:center; padding:14px 10px 22px; font-size:11px; color:var(--ink-faint); position:relative; z-index:1; }
+
+  @media (max-width:560px){
+    .bubble{ width:112px; height:112px; border-radius:26px; }
+    .galaxy{ height:420px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <!-- الخطوة 1 -->
-    <div id="step1" class="step active">
-        <h2>أهلاً بك في بوصلة المستقبل 🧭</h2>
-        <p>هل أنت مستعد لمواجهة تحديات التحول واكتشاف مسارك الحقيقي؟</p>
-        <button onclick="nextStep(2)">نعم، أنا مستعد تماماً!</button>
+<div class="nebula"><span></span><span></span><span></span></div>
+
+<div class="app">
+
+  <header class="bar">
+    <div class="brand">
+      <div class="mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v11H8l-4 4V4z"/><circle cx="9" cy="9.5" r=".6" fill="#fff" stroke="none"/><circle cx="12" cy="9.5" r=".6" fill="#fff" stroke="none"/><circle cx="15" cy="9.5" r=".6" fill="#fff" stroke="none"/></svg>
+      </div>
+      <div class="txt">
+        <b>اسألني ASK ME</b>
+        <span>المجلس الاستشاري الطلابي</span>
+      </div>
     </div>
+    <div class="zone-pill">Zone 1 — <em>البدايات</em></div>
+  </header>
 
-    <!-- الخطوة 2 -->
-    <div id="step2" class="step">
-        <h2>رؤيتك القادمة ✨</h2>
-        <p>أين تتمنى أن تكون وماذا تريد أن تحقق بعد **أربع سنوات** من الآن؟</p>
-        <input type="text" id="userGoal" placeholder="مثال: مستشار مالية، رائد أعمال..." required>
-        <button onclick="generateCompass()">توليد بوصلة النصائح 🪄</button>
-    </div>
+  <main>
 
-    <!-- الخطوة 3 -->
-    <div id="step3" class="step">
-        <h2>بوصلتك الشخصية 🧭</h2>
-        <div id="compassOutput" class="compass-result"></div>
+    <!-- ===================== SCREEN 1 ===================== -->
+    <section id="screen-choose" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">من هنا بدأنا</div>
+        <h1>ما الشعور الذي يرافقكِ الآن؟</h1>
+        <p>توقفي للحظة… كل بداية تحمل شعورًا مختلفًا. اختاري ما يشبهكِ اليوم، واكتشفي كم طالبة تشعر بمثل شعوركِ.</p>
+      </div>
 
-        <div class="qr-section">
-            <h3>حفظ التذكير في التقويم 📲</h3>
-            <p style="font-size: 14px;">امسح الباركود بالكاميرا لفتح صفحة إضافة التذكير مباشرة إلى تقويمك:</p>
-            
-            <div id="qrcode"></div>
+      <div class="grid" id="feelingsGrid" role="list"></div>
 
-            <a id="directCalendarLink" target="_blank" class="btn-link" style="background-color: #059669;">فتح التقويم وحفظ التذكير مباشرة 📅</a>
+      <div class="foot-note">
+        <span class="dot"></span>
+        <span id="todayCount">أول من يشارك مشاعرها اليوم</span>
+      </div>
+    </section>
+
+    <!-- ===================== SCREEN 2 ===================== -->
+    <section id="screen-result" class="screen result">
+      <div class="galaxy" id="galaxy"></div>
+
+      <div class="result-card">
+        <div class="orb-wrap">
+          <div class="orb" id="orb" style="--c:var(--teal)">
+            <div class="ic" id="orbIcon"></div>
+            <div class="lb" id="orbLabel"></div>
+          </div>
         </div>
 
-        <button onclick="resetApp()" style="background-color: #475569; margin-top: 15px;">إعادة التجربة 🔄</button>
+        <div class="stat">
+          <div class="ring-num"><small>٪</small><span id="percentNum">٠</span></div>
+          <p id="statLine"></p>
+        </div>
+
+        <div class="msg-line" id="msgLine"></div>
+
+        <div class="actions">
+          <button class="btn-next" id="btnNext">التالية ✨</button>
+          <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="credit">جدار البدايات · جامعة الأميرة نورة بنت عبدالرحمن — تُعرض هذه التجربة على أجهزة الركن فقط</footer>
+</div>
+
+<!-- admin reset -->
+<div class="admin" id="adminBtn" title="إعادة ضبط الإحصائيات">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+</div>
+
+<div class="modal-veil" id="modalVeil">
+  <div class="modal">
+    <p>هل ترغبين في مسح جميع إحصائيات المشاعر لهذا الركن؟ هذا الإجراء يُستخدم فقط من قِبل منسقة الركن في بداية الفعالية.</p>
+    <div class="row">
+      <button class="cancel" id="modalCancel">إلغاء</button>
+      <button class="confirm" id="modalConfirm">مسح البيانات</button>
     </div>
+  </div>
 </div>
 
 <script>
-    function nextStep(stepNumber) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step' + stepNumber).classList.add('active');
-    }
+(function(){
+  "use strict";
 
-    function generateCompass() {
-        const goal = document.getElementById('userGoal').value.trim();
-        if (!goal) {
-            alert("لطفاً اكتب هدفك للسنوات الأربع القادمة لنتمكن من بناء البوصلة.");
-            return;
-        }
+  /* ---------------- feelings data ---------------- */
+  // color families are intentional: purple = مشاعر مكثّفة، وردي = مشاعر دافئة، تركواز = مشاعر هادئة
+  const FEELINGS = [
+    { id:"tawattur", label:"توتر", color:"#6C4AB6",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4-7 4 12 4-9 3 6 3-4"/></svg>',
+      msg:"التوتر في أول يوم طبيعي جدًا، وهو دليل أنكِ تهتمين ببداية موفّقة." },
+    { id:"khawf", label:"خوف", color:"#5A3FA0",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>',
+      msg:"الخوف من المجهول جزء من كل بداية حقيقية، وطالبات كثيرات شعرن بنفس الشيء ثم تجاوزنه." },
+    { id:"taraddud", label:"تردد", color:"#7C56C9",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M6 10L2 6M6 10l4-4"/><path d="M18 20V4M18 4l-4 4M18 4l4 4"/></svg>',
+      msg:"التردد يعني أنكِ تزنين خياراتكِ بعناية — هذا نضج لا قلق." },
+    { id:"hamas", label:"حماس", color:"#E14F94",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>',
+      msg:"احتفظي بهذا الحماس — سيكون وقودكِ في أصعب أسابيع الدراسة." },
+    { id:"ishtiyaq", label:"اشتياق", color:"#F06FA8",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10c4-2 4 4 8 2s4-4 8-2"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/></svg>',
+      msg:"من الطبيعي أن تشتاقي لما هو مألوف وأنتِ تبنين شيئًا جديدًا." },
+    { id:"hirs", label:"حرص", color:"#C24E9E",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>',
+      msg:"حرصكِ على البداية الصحيحة هو أول خطوة نحو التميز." },
+    { id:"fudul", label:"فضول", color:"#2FA9AE",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>',
+      msg:"الفضول هو ما يجعل الجامعة مساحة اكتشاف لا مجرد محاضرات." },
+    { id:"tafaul", label:"تفاؤل", color:"#17B8A0",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>',
+      msg:"تفاؤلكِ سينعكس على كل خيار تتخذينه هذا الفصل." },
+    { id:"hudu", label:"هدوء", color:"#16818C",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-2 3 2 6 2s3-4 6-2 3 2 6 2M3 15c3-2 3 2 6 2s3-4 6-2 3 2 6 2"/></svg>',
+      msg:"هدوؤكِ اليوم أساس متين تبنين عليه بقية رحلتكِ." },
+  ];
 
-        const adviceList = [
-            `الوصول إلى "${goal}" يتطلب الاستمرارية اليومية وليس فقط الشغف المؤقت.`,
-            `ركز خلال السنة الأولى على بناء المهارات الأساسية التي تجعلك خبيراً في مجالك.`,
-            `اجعل كل قرار تتخذه اليوم يخدم الصورة التي تريد أن تكون عليها بعد 4 سنوات.`
-        ];
+  const STORAGE_KEY = "askme_zone1_responses_v1";
 
-        document.getElementById('compassOutput').innerHTML = `
-            <strong>خطة البوصلة للوصول لـ (${goal}):</strong>
-            <ul>
-                <li>${adviceList[0]}</li>
-                <li>${adviceList[1]}</li>
-                <li>${adviceList[2]}</li>
-            </ul>
-        `;
+  /* ---------------- storage helpers ---------------- */
+  function loadAll(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveAll(list){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+  function isSameDay(ts, ref){
+    const a = new Date(ts), b = new Date(ref);
+    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+  }
+  function todaysResponses(){
+    const now = Date.now();
+    return loadAll().filter(r => isSameDay(r.ts, now));
+  }
+  function addResponse(id){
+    const all = loadAll();
+    all.push({ feeling:id, ts:Date.now() });
+    saveAll(all);
+  }
+  function arNum(n){ return new Intl.NumberFormat('ar-SA').format(n); }
 
-        setupCalendarEvent(goal, adviceList[0]);
-        nextStep(3);
-    }
+  /* ---------------- build screen 1 grid ---------------- */
+  const grid = document.getElementById("feelingsGrid");
+  FEELINGS.forEach(f=>{
+    const btn = document.createElement("button");
+    btn.className = "bubble";
+    btn.style.setProperty("--c", f.color);
+    btn.setAttribute("role","listitem");
+    btn.setAttribute("aria-label", f.label);
+    btn.innerHTML = `<span class="ic">${f.icon}</span><span class="lb">${f.label}</span>`;
+    btn.addEventListener("click", ()=> chooseFeeling(f.id));
+    grid.appendChild(btn);
+  });
 
-    function setupCalendarEvent(goal, advice) {
-        // إنشاء رابط تقويم ويب قياسي يتعرف عليه الجوال فوراً
-        const title = encodeURIComponent(`تذكير البوصلة: ${goal}`);
-        const details = encodeURIComponent(`نصيحة البوصلة: ${advice}`);
-        
-        // رابط تقويم Google المباشر (تفتح كصفحة ويب عند مسح الباركود)
-        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
+  function updateTodayCount(){
+    const n = todaysResponses().length;
+    const el = document.getElementById("todayCount");
+    el.textContent = n === 0
+      ? "أول من يشارك مشاعرها اليوم"
+      : `${arNum(n)} طالبة شاركت مشاعرها اليوم`;
+  }
+  updateTodayCount();
 
-        // 1. تحديث زر الضغط المباشر
-        const calendarBtn = document.getElementById('directCalendarLink');
-        calendarBtn.href = calendarUrl;
+  /* ---------------- galaxy background ---------------- */
+  const galaxyEl = document.getElementById("galaxy");
+  function renderGalaxy(highlightId){
+    galaxyEl.innerHTML = "";
+    const all = loadAll();
+    const sample = all.length > 160
+      ? all.sort(()=>Math.random()-0.5).slice(0,160)
+      : all;
+    sample.forEach((r, i)=>{
+      const f = FEELINGS.find(x=>x.id===r.feeling);
+      if(!f) return;
+      const s = document.createElement("span");
+      const isNew = highlightId && i === sample.length-1 && r.feeling===highlightId;
+      s.className = "star" + (isNew ? " new" : "");
+      const size = 4 + Math.random()*7;
+      s.style.width = size+"px";
+      s.style.height = size+"px";
+      s.style.left = (Math.random()*96)+"%";
+      s.style.top = (Math.random()*94)+"%";
+      s.style.background = f.color;
+      s.style.boxShadow = `0 0 ${8+size}px ${f.color}`;
+      s.style.animationDelay = (Math.random()*4)+"s, "+(Math.random()*6)+"s";
+      s.style.animationDuration = (2.6+Math.random()*2.4)+"s, "+(10+Math.random()*8)+"s";
+      galaxyEl.appendChild(s);
+    });
+  }
 
-        // 2. توليد الباركود ليحتوي على رابط الويب الصريح
-        const qrContainer = document.getElementById('qrcode');
-        qrContainer.innerHTML = "";
+  /* ---------------- screen 2 ---------------- */
+  const screenChoose = document.getElementById("screen-choose");
+  const screenResult = document.getElementById("screen-result");
+  const orb = document.getElementById("orb");
+  const orbIcon = document.getElementById("orbIcon");
+  const orbLabel = document.getElementById("orbLabel");
+  const percentNum = document.getElementById("percentNum");
+  const statLine = document.getElementById("statLine");
+  const msgLine = document.getElementById("msgLine");
+  const progressBar = document.getElementById("progressBar");
+  let autoTimer = null;
 
-        new QRCode(qrContainer, {
-            text: calendarUrl,
-            width: 180,
-            height: 180,
-            colorDark : "#1e293b",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.L
-        });
-    }
+  function chooseFeeling(id){
+    addResponse(id);
+    const f = FEELINGS.find(x=>x.id===id);
+    const today = todaysResponses();
+    const count = today.filter(r=>r.feeling===id).length;
+    const percent = Math.round((count/today.length)*100);
 
-    function resetApp() {
-        document.getElementById('userGoal').value = "";
-        nextStep(1);
-    }
+    orb.style.setProperty("--c", f.color);
+    orbIcon.innerHTML = f.icon;
+    orbLabel.textContent = f.label;
+    msgLine.textContent = f.msg;
+    statLine.innerHTML = `<b>${arNum(count)}</b> من أصل ${arNum(today.length)} مشاركة اليوم اخترن نفس شعوركِ. لستِ وحدكِ.`;
+
+    animatePercent(percent);
+    renderGalaxy(id);
+    updateTodayCount();
+
+    screenChoose.classList.remove("active");
+    screenResult.classList.add("active");
+
+    // restart auto-return progress bar
+    progressBar.style.animation = "none";
+    void progressBar.offsetWidth;
+    progressBar.style.animation = "shrink 12s linear forwards";
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(goToChoose, 12000);
+  }
+
+  function animatePercent(target){
+    let cur = 0;
+    const step = Math.max(1, Math.round(target/24));
+    clearInterval(percentNum._t);
+    percentNum._t = setInterval(()=>{
+      cur = Math.min(target, cur+step);
+      percentNum.textContent = arNum(cur);
+      if(cur>=target) clearInterval(percentNum._t);
+    }, 22);
+  }
+
+  function goToChoose(){
+    clearTimeout(autoTimer);
+    screenResult.classList.remove("active");
+    screenChoose.classList.add("active");
+  }
+  document.getElementById("btnNext").addEventListener("click", goToChoose);
+
+  /* ---------------- admin reset ---------------- */
+  const adminBtn = document.getElementById("adminBtn");
+  const modalVeil = document.getElementById("modalVeil");
+  adminBtn.addEventListener("click", ()=> modalVeil.classList.add("show"));
+  document.getElementById("modalCancel").addEventListener("click", ()=> modalVeil.classList.remove("show"));
+  document.getElementById("modalConfirm").addEventListener("click", ()=>{
+    localStorage.removeItem(STORAGE_KEY);
+    modalVeil.classList.remove("show");
+    updateTodayCount();
+    goToChoose();
+  });
+
+})();
 </script>
-
 </body>
-</html>
+</html></html>
