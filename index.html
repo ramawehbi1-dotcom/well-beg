@@ -222,8 +222,8 @@
 
         <input type="text" id="customMood" placeholder="أو اكتبي شعوركِ هنا إن لم تجديه..." oninput="clearMoodCards()">
 
-        <p style="font-size: 13px; font-weight: bold; margin-top: 10px; margin-bottom: 2px;">ما هو حلمكِ أو هدفكِ بعد 4 سنوات؟</p>
-        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، قائدة أعمال..." required>
+        <p style="font-size: 13px; font-weight: bold; margin-top: 10px; margin-bottom: 2px;">ما هو هدفكِ أو حلمكِ بعد 4 سنوات؟ (اختياري)</p>
+        <input type="text" id="userGoal" placeholder="مثال: مستشارة مالية، أو اتركيها فارغة للاستكشاف...">
 
         <button onclick="generatePlan()">توليد الخطة والبوصلة ➔</button>
     </div>
@@ -233,7 +233,6 @@
         <div id="planOutput" class="plan-box"></div>
 
         <p style="font-size: 13px; font-weight: bold; color: var(--pnu-purple); margin-bottom: 5px;">امسحي الباركود بجوالكِ لحفظ التذكير 📲</p>
-        <p style="font-size: 12px; color: #6b21a8; margin: 0 0 10px 0;">حددي نوع جهازكِ لإنشاء الباركود الخاص به:</p>
 
         <div class="device-selector">
             <button class="device-btn" id="btnApple" onclick="generateDeviceQR('apple')">أجهزة Apple 🍏</button>
@@ -268,7 +267,7 @@
 
 <script>
     let selectedMood = "";
-    let globalGoal = "";
+    let globalGoalText = "";
     let globalAdvice = "";
 
     function selectMood(mood, element) {
@@ -286,29 +285,42 @@
     function generatePlan() {
         const customMood = document.getElementById('customMood').value.trim();
         const finalMood = customMood || selectedMood;
-        globalGoal = document.getElementById('userGoal').value.trim();
+        const rawGoal = document.getElementById('userGoal').value.trim();
 
         if (!finalMood) {
             alert("لطفاً اختاري شعوركِ أو اكتبي شعوركِ المخصص لمتابعة البوصلة!");
             return;
         }
-        if (!globalGoal) {
-            alert("لطفاً اكتبي حلمكِ أو هدفكِ للسنوات الأربع القادمة!");
-            return;
+
+        const noGoalKeywords = ["لا يوجد", "ما عندي", "لا اعلم", "ما ادري", "بدون", "لا ادري", "لاشيء", "لا شيء"];
+        const hasNoGoal = !rawGoal || noGoalKeywords.some(kw => rawGoal.includes(kw));
+
+        if (finalMood === "حماس") globalAdvice = "وجهي هذا الحماس لتجربة الأنشطة الطلابية والبدء في اكتشاف مهاراتكِ الكامنة.";
+        else if (finalMood === "توتر" || finalMood === "خوف") globalAdvice = "التوتر طبيعي جداً؛ ركزي على جدولكِ الحالي وتذكري أن عدم وضوح الهدف الآن لا يمنع نجاحكِ مستقبلاً.";
+        else if (finalMood === "فضول") globalAdvice = "استكشفي التخصصات والمجالات المتاحة لكِ في الجامعة لتحديد ما يستهويكِ.";
+        else globalAdvice = "ركزي على بناء معدل قوي في السنة الأولى؛ فهو المرتكز الذي يمنحكِ حرية الاختيار مستقبلاً.";
+
+        let planHTML = "";
+
+        if (hasNoGoal) {
+            globalGoalText = "رحلة اكتشاف الذات والهدف";
+            planHTML = `
+                <strong>خطة استكشاف الشغف والهدف 🧭</strong><br>
+                • <strong>شعورك الحالي (${finalMood}):</strong> ${globalAdvice}<br>
+                • <strong>السنة الأولى:</strong> التركيز على بناء معدل مرتفع والتجربة في الأندية الطلابية لاكتشاف ميولكِ.<br>
+                • <strong>السنة الرابعة:</strong> التخرج برؤية واضحة ومسار محدد تم اختياره بعناية!
+            `;
+        } else {
+            globalGoalText = rawGoal;
+            planHTML = `
+                <strong>خطة الوصول لـ (${rawGoal}) 🎯</strong><br>
+                • <strong>شعورك الحالي (${finalMood}):</strong> ${globalAdvice}<br>
+                • <strong>السنة الأولى:</strong> بناء حصيلة معرفية متينة والحفاظ على التفوق الأكاديمي.<br>
+                • <strong>السنة الرابعة:</strong> التخرج والوصول لمرتبة (${rawGoal}) بجدارة واستحقاق!
+            `;
         }
 
-        globalAdvice = "وجهي هذا الشعور فوراً لبناء عادات دراسية متوازنة والانضمام للأنشطة التي تصنع شخصيتكِ.";
-        if (finalMood === "حماس") globalAdvice = "وجهي هذا الحماس فوراً للتعرف على أندية الكلية والبدء في بناء مهاراتكِ القيادية.";
-        else if (finalMood === "توتر" || finalMood === "خوف") globalAdvice = "الشعور طبيعي جداً؛ ركزي على جدولكِ الأسبوعي الحالي وتذكري أن كل الخريجات بدأن من نفس النقطة.";
-        else if (finalMood === "فضول") globalAdvice = "استكشفي مرافق الجامعة والشهادات المعتمدة المتاحة لتخصصكِ مبكراً.";
-
-        document.getElementById('planOutput').innerHTML = `
-            <strong>خطة الوصول لحلم: (${globalGoal}) 🎯</strong><br>
-            • <strong>شعورك الحالي (${finalMood}):</strong> ${globalAdvice}<br>
-            • <strong>السنة الأولى:</strong> التركيز على المعرفة الأساسية وبناء المعدل الأكاديمي.<br>
-            • <strong>السنة الرابعة:</strong> التخرج والوصول لمرتبة (${globalGoal}) بجدارة واستحقاق!
-        `;
-
+        document.getElementById('planOutput').innerHTML = planHTML;
         document.getElementById('step1').classList.remove('active');
         document.getElementById('step2').classList.add('active');
     }
@@ -320,20 +332,21 @@
         const qrContainer = document.getElementById('qrcode');
         qrContainer.innerHTML = "";
 
-        let qrData = "";
+        // استخدام رابط تقويم موحد يفتح في iOS وأندرويد بسلاسة وبدون أخطاء
+        const title = encodeURIComponent('تذكير البدايات: ' + globalGoalText);
+        const details = encodeURIComponent('خطة البوصلة: ' + globalAdvice);
+        const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
 
         if (type === 'apple') {
             document.getElementById('btnApple').classList.add('active');
             qrNotice.innerText = "🍏 باركود أجهزة أبل (iPhone/iPad):";
-            qrData = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:تذكير البدايات: ${globalGoal}\nDESCRIPTION:${globalAdvice}\nEND:VEVENT\nEND:VCALENDAR`;
         } else {
             document.getElementById('btnAndroid').classList.add('active');
             qrNotice.innerText = "🤖 باركود أجهزة أندرويد و Google:";
-            qrData = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تذكير هدف: ' + globalGoal)}&details=${encodeURIComponent('خطة الوصول: ' + globalAdvice)}`;
         }
 
         new QRCode(qrContainer, {
-            text: qrData,
+            text: calendarUrl,
             width: 160,
             height: 160,
             colorDark : "#702b84",
@@ -356,7 +369,7 @@
 
     function resetApp() {
         selectedMood = "";
-        globalGoal = "";
+        globalGoalText = "";
         globalAdvice = "";
         document.getElementById('customMood').value = "";
         document.getElementById('userGoal').value = "";
