@@ -23,7 +23,6 @@
     --ink:#1B222B;
     --ink-soft:rgba(253,249,246,.72);
     --ink-faint:rgba(253,249,246,.42);
-    --ring-track: rgba(253,249,246,.14);
     --shadow: 0 18px 45px rgba(6,25,29,.35);
     --ease: cubic-bezier(.22,.9,.32,1);
   }
@@ -43,185 +42,172 @@
     position:relative;
   }
 
-  /* ---------- ambient nebula texture ---------- */
-  .nebula{
-    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-  }
-  .nebula span{
-    position:absolute; border-radius:50%;
-    filter: blur(60px); opacity:.28;
-    animation: drift 24s ease-in-out infinite;
-  }
+  .nebula{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .nebula span{ position:absolute; border-radius:50%; filter: blur(60px); opacity:.28; animation: drift 24s ease-in-out infinite; }
   .nebula span:nth-child(1){width:420px;height:420px; background:var(--purple); top:-10%; right:-8%; animation-duration:26s;}
   .nebula span:nth-child(2){width:360px;height:360px; background:var(--teal-bright); bottom:-12%; left:-10%; animation-duration:30s; animation-delay:-6s;}
   .nebula span:nth-child(3){width:280px;height:280px; background:var(--pink); top:45%; left:60%; animation-duration:22s; animation-delay:-3s;}
-  @keyframes drift{
-    0%,100%{ transform:translate(0,0) scale(1); }
-    50%{ transform:translate(-30px,25px) scale(1.08); }
-  }
+  @keyframes drift{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-30px,25px) scale(1.08); } }
 
   .app{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
 
-  /* ---------- top bar ---------- */
-  header.bar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px clamp(18px,4vw,48px) 10px;
-  }
+  header.bar{ display:flex; align-items:center; justify-content:space-between; padding:20px clamp(18px,4vw,48px) 6px; }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand .mark{
-    width:38px; height:38px; border-radius:50%;
-    background:linear-gradient(135deg,var(--purple),var(--pink));
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 16px rgba(225,79,148,.35);
-    flex:none;
-  }
-  .brand .mark svg{ width:19px; height:19px; }
+  .brand .mark{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(225,79,148,.35); flex:none; }
+  .brand .mark svg{ width:18px; height:18px; }
   .brand .txt{ line-height:1.05; }
-  .brand .txt b{ display:block; font-weight:800; font-size:15px; letter-spacing:.2px;}
-  .brand .txt span{ display:block; font-size:10.5px; color:var(--ink-faint); letter-spacing:2px; }
-  .zone-pill{
-    font-size:12.5px; font-weight:700; color:var(--ink-soft);
-    border:1px solid rgba(253,249,246,.22); padding:7px 16px; border-radius:999px;
-    backdrop-filter: blur(6px);
-  }
+  .brand .txt b{ display:block; font-weight:800; font-size:14px; }
+  .brand .txt span{ display:block; font-size:10px; color:var(--ink-faint); letter-spacing:2px; }
+  .zone-pill{ font-size:12px; font-weight:700; color:var(--ink-soft); border:1px solid rgba(253,249,246,.22); padding:6px 14px; border-radius:999px; backdrop-filter: blur(6px); }
   .zone-pill em{ font-style:normal; color:var(--teal-bright); }
 
-  main{ flex:1; display:flex; align-items:center; justify-content:center; padding:10px 16px 40px; }
+  /* ---------- stepper ---------- */
+  .stepper{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:6px 14px 0; flex-wrap:wrap;
+  }
+  .step-item{ display:flex; align-items:center; gap:6px; }
+  .step-dot{
+    width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:800; color:var(--ink-faint);
+    border:1.5px solid rgba(253,249,246,.2); transition:.3s;
+  }
+  .step-label{ font-size:11px; color:var(--ink-faint); font-weight:700; transition:.3s; white-space:nowrap; }
+  .step-line{ width:20px; height:1.5px; background:rgba(253,249,246,.16); margin:0 2px; }
+  .step-item.active .step-dot{ background:linear-gradient(135deg,var(--purple),var(--pink)); border-color:transparent; color:#fff; }
+  .step-item.active .step-label{ color:#fff; }
+  .step-item.done .step-dot{ background:rgba(31,201,183,.18); border-color:var(--teal-bright); color:var(--teal-bright); }
+  .step-item.done .step-label{ color:var(--ink-soft); }
 
-  .screen{ width:100%; max-width:980px; display:none; animation: fadeUp .55s var(--ease); }
+  main{ flex:1; display:flex; align-items:center; justify-content:center; padding:14px 16px 40px; }
+
+  .screen{ width:100%; max-width:980px; display:none; animation: fadeUp .5s var(--ease); }
   .screen.active{ display:block; }
   @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ================= SCREEN 1 — CHOOSE ================= */
-  .hero{ text-align:center; margin-bottom:8px; }
-  .hero .eyebrow{
-    font-size:13px; letter-spacing:3px; color:var(--teal-bright); font-weight:700;
-    text-transform:none; margin-bottom:10px;
-  }
-  .hero h1{
-    font-size:clamp(28px,5vw,44px); margin:0 0 10px; font-weight:900; letter-spacing:.2px;
-    background:linear-gradient(90deg,#fff, #EFE7FF 40%, #fff);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .hero p{ margin:0 auto; max-width:520px; color:var(--ink-soft); font-size:15.5px; line-height:1.8; }
+  .hero{ text-align:center; margin-bottom:6px; }
+  .hero .eyebrow{ font-size:12.5px; letter-spacing:3px; color:var(--teal-bright); font-weight:700; margin-bottom:8px; }
+  .hero h1{ font-size:clamp(24px,4.4vw,38px); margin:0 0 8px; font-weight:900; letter-spacing:.2px; background:linear-gradient(90deg,#fff, #EFE7FF 40%, #fff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p{ margin:0 auto; max-width:520px; color:var(--ink-soft); font-size:14.5px; line-height:1.8; }
 
-  .grid{
-    margin-top:34px; display:flex; flex-wrap:wrap; justify-content:center; gap:18px 16px;
-    max-width:820px; margin-inline:auto;
-  }
+  .grid{ margin-top:28px; display:flex; flex-wrap:wrap; justify-content:center; gap:16px 14px; max-width:820px; margin-inline:auto; }
   .bubble{
-    --c: var(--teal);
-    all:unset; cursor:pointer;
-    width:132px; height:132px; border-radius:32px;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    --c: var(--teal); all:unset; cursor:pointer; width:124px; height:124px; border-radius:30px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px;
     background: linear-gradient(155deg, color-mix(in srgb, var(--c) 22%, transparent), color-mix(in srgb, var(--c) 6%, transparent));
     border:1.5px solid color-mix(in srgb, var(--c) 55%, transparent);
-    backdrop-filter: blur(4px);
-    box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    backdrop-filter: blur(4px); box-shadow: 0 10px 26px rgba(0,0,0,.18);
     transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s;
-    animation: bob 6s ease-in-out infinite;
-    position:relative;
+    animation: bob 6s ease-in-out infinite; position:relative;
   }
   .bubble:nth-child(odd){ animation-duration:7s; }
   .bubble:nth-child(3n){ animation-delay:-2.3s; }
   .bubble:nth-child(4n){ animation-delay:-4.1s; }
-  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
-
+  @keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-7px);} }
   .bubble:hover, .bubble:focus-visible{
-    transform:translateY(-10px) scale(1.05);
+    transform:translateY(-9px) scale(1.05);
     background: linear-gradient(155deg, color-mix(in srgb, var(--c) 38%, transparent), color-mix(in srgb, var(--c) 12%, transparent));
-    box-shadow: 0 18px 34px color-mix(in srgb, var(--c) 45%, transparent);
-    outline:none;
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--c) 45%, transparent); outline:none;
   }
-  .bubble .ic{ width:30px; height:30px; color:color-mix(in srgb, var(--c) 70%, white); }
+  .bubble.picked{ border-color:#fff; box-shadow:0 0 0 3px color-mix(in srgb, var(--c) 60%, transparent); }
+  .bubble .ic{ width:28px; height:28px; color:color-mix(in srgb, var(--c) 70%, white); }
   .bubble .ic svg{ width:100%; height:100%; }
-  .bubble .lb{ font-size:14.5px; font-weight:700; color:#fff; }
+  .bubble .lb{ font-size:13.5px; font-weight:700; color:#fff; text-align:center; padding:0 4px; }
 
-  .foot-note{
-    margin-top:34px; text-align:center; font-size:12.5px; color:var(--ink-faint);
-    display:flex; align-items:center; justify-content:center; gap:8px;
-  }
+  .foot-note{ margin-top:30px; text-align:center; font-size:12.5px; color:var(--ink-faint); display:flex; align-items:center; justify-content:center; gap:8px; }
   .foot-note .dot{ width:6px; height:6px; border-radius:50%; background:var(--teal-bright); animation:pulse 1.6s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{opacity:.4;} 50%{opacity:1;} }
 
-  /* ================= SCREEN 2 — RESULT / GALAXY ================= */
+  .nav-row{ display:flex; justify-content:center; margin-top:26px; }
+  .btn{ all:unset; cursor:pointer; padding:12px 30px; border-radius:999px; font-weight:800; font-size:14.5px; transition:transform .2s var(--ease); }
+  .btn-primary{ background:linear-gradient(90deg,var(--teal-bright), var(--teal)); color:#06282c; box-shadow:0 12px 26px rgba(31,201,183,.32); }
+  .btn-primary:hover{ transform:translateY(-3px); }
+  .btn-primary[disabled]{ opacity:.35; pointer-events:none; }
+  .btn-ghost{ color:var(--ink-soft); font-size:13px; text-decoration:underline; text-underline-offset:4px; }
+
+  /* ---------- step 3: wisdom ---------- */
   .result{ position:relative; }
-  .galaxy{
-    position:absolute; inset:-40px -16px auto -16px; height:520px; z-index:0;
-    overflow:hidden; border-radius:28px;
-    pointer-events:none;
-  }
-  .star{
-    position:absolute; border-radius:50%;
-    animation: twinkle 3.4s ease-in-out infinite, floaty 14s ease-in-out infinite;
-  }
+  .galaxy{ position:absolute; inset:-30px -16px auto -16px; height:440px; z-index:0; overflow:hidden; border-radius:28px; pointer-events:none; }
+  .star{ position:absolute; border-radius:50%; animation: twinkle 3.4s ease-in-out infinite, floaty 14s ease-in-out infinite; }
   @keyframes twinkle{ 0%,100%{opacity:.25;} 50%{opacity:.9;} }
   @keyframes floaty{ 0%,100%{ transform:translateY(0) translateX(0);} 50%{ transform:translateY(-14px) translateX(6px);} }
   .star.new{ animation: pop .7s var(--ease), twinkle 3.4s ease-in-out infinite .7s, floaty 14s ease-in-out infinite; }
   @keyframes pop{ 0%{ transform:scale(0); opacity:0;} 60%{ transform:scale(1.5); opacity:1;} 100%{ transform:scale(1);} }
 
-  .result-card{
-    position:relative; z-index:1;
-    display:grid; grid-template-columns:1fr; gap:26px;
-    justify-items:center; text-align:center; padding:30px 18px 10px;
-  }
-  .orb-wrap{ position:relative; width:190px; height:190px; }
+  .result-card{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; padding:20px 18px 6px; }
   .orb{
-    width:190px; height:190px; border-radius:50%;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    width:132px; height:132px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
     background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 55%, white 10%), color-mix(in srgb, var(--c) 85%, black 10%) 70%);
-    box-shadow: 0 0 0 10px color-mix(in srgb, var(--c) 14%, transparent), 0 20px 60px color-mix(in srgb, var(--c) 55%, transparent);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--c) 14%, transparent), 0 16px 44px color-mix(in srgb, var(--c) 55%, transparent);
     animation: orbPulse 3s ease-in-out infinite;
   }
-  @keyframes orbPulse{ 0%,100%{ box-shadow:0 0 0 10px color-mix(in srgb, var(--c) 14%, transparent), 0 20px 60px color-mix(in srgb, var(--c) 55%, transparent);} 50%{ box-shadow:0 0 0 18px color-mix(in srgb, var(--c) 8%, transparent), 0 26px 70px color-mix(in srgb, var(--c) 65%, transparent);} }
-  .orb .ic{ width:44px; height:44px; color:#fff; }
+  @keyframes orbPulse{ 0%,100%{ box-shadow:0 0 0 8px color-mix(in srgb, var(--c) 14%, transparent), 0 16px 44px color-mix(in srgb, var(--c) 55%, transparent);} 50%{ box-shadow:0 0 0 14px color-mix(in srgb, var(--c) 8%, transparent), 0 22px 54px color-mix(in srgb, var(--c) 65%, transparent);} }
+  .orb .ic{ width:32px; height:32px; color:#fff; }
   .orb .ic svg{ width:100%; height:100%; }
-  .orb .lb{ font-size:19px; font-weight:800; color:#fff; }
+  .orb .lb{ font-size:14.5px; font-weight:800; color:#fff; }
 
-  .stat{ max-width:480px; }
-  .stat .ring-num{ font-size:52px; font-weight:900; line-height:1; }
-  .stat .ring-num small{ font-size:22px; font-weight:800; margin-inline-end:2px; }
-  .stat p{ margin:10px 0 0; color:var(--ink-soft); font-size:15px; line-height:1.9; }
-  .stat p b{ color:#fff; }
+  .stat-badge{ font-size:13px; color:var(--ink-soft); }
+  .stat-badge b{ color:var(--teal-bright); font-size:16px; }
 
-  .msg-line{
-    max-width:520px; font-size:14.5px; color:var(--ink-soft); line-height:1.9;
-    border-top:1px solid rgba(253,249,246,.14); padding-top:16px; margin-top:4px;
+  .wisdom-card{
+    max-width:560px; background:rgba(253,249,246,.06); border:1px solid rgba(253,249,246,.16);
+    border-radius:22px; padding:26px 26px 22px; backdrop-filter: blur(6px);
   }
+  .wisdom-card .goal-tag{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:12.5px; color:var(--ink-faint); margin-bottom:12px; font-weight:700; }
+  .wisdom-card .goal-tag .ic{ width:16px; height:16px; color:var(--teal-bright); }
+  .wisdom-card .goal-tag .ic svg{ width:100%; height:100%; }
+  .wisdom-card .quote{ font-size:18px; font-weight:800; line-height:1.9; color:#fff; position:relative; }
+  .wisdom-card .quote::before{ content:"“"; color:var(--pink-2); font-size:30px; font-weight:900; margin-left:4px; }
+  .wisdom-card .quote::after{ content:"”"; color:var(--pink-2); font-size:30px; font-weight:900; margin-right:4px; }
+  .wisdom-card .bridge{ font-size:13px; color:var(--ink-soft); margin-top:14px; line-height:1.8; }
 
-  .actions{ display:flex; align-items:center; gap:14px; margin-top:6px; }
-  .btn-next{
-    all:unset; cursor:pointer; padding:13px 34px; border-radius:999px; font-weight:800; font-size:15px;
-    background:linear-gradient(90deg,var(--teal-bright), var(--teal));
-    color:#06282c; box-shadow:0 12px 26px rgba(31,201,183,.32);
-    transition:transform .2s var(--ease);
+  /* ---------- step 4: senior Q&A ---------- */
+  .concern-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:700px; margin:26px auto 0; }
+  .concern-pill{
+    all:unset; cursor:pointer; padding:11px 20px; border-radius:999px; font-size:13.5px; font-weight:700;
+    background:rgba(253,249,246,.07); border:1.5px solid rgba(253,249,246,.2); color:var(--ink-soft);
+    transition:.2s;
   }
-  .btn-next:hover{ transform:translateY(-3px); }
-
-  .progress-wrap{ width:180px; height:4px; border-radius:99px; background:rgba(253,249,246,.15); overflow:hidden; }
-  .progress-bar{ height:100%; background:var(--teal-bright); width:100%; transform-origin:right; animation: shrink 12s linear forwards; }
-  @keyframes shrink{ from{ transform:scaleX(1);} to{ transform:scaleX(0);} }
-
-  /* ---------- admin / coordinator reset ---------- */
-  .admin{
-    position:fixed; bottom:14px; left:14px; z-index:5;
-    width:34px; height:34px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    background:rgba(253,249,246,.06); border:1px solid rgba(253,249,246,.14);
-    color:var(--ink-faint); cursor:pointer; transition:.2s;
+  .concern-pill:hover{ background:rgba(253,249,246,.13); }
+  .concern-pill.open{ background:linear-gradient(90deg,var(--purple-2),var(--pink)); border-color:transparent; color:#fff; }
+  .concern-answer{
+    max-width:600px; margin:10px auto 0; padding:18px 20px; border-radius:16px;
+    background:rgba(31,201,183,.08); border:1px solid rgba(31,201,183,.3);
+    font-size:14px; line-height:1.85; color:var(--ink-soft); text-align:right;
+    display:none; animation:fadeUp .35s var(--ease);
   }
+  .concern-answer.show{ display:block; }
+  .concern-answer b{ color:var(--teal-bright); display:block; margin-bottom:6px; font-size:13px; }
+
+  /* ---------- step 5: message exchange ---------- */
+  .msg-received{
+    max-width:520px; margin:22px auto 0; padding:22px 24px; border-radius:20px 20px 20px 4px;
+    background:linear-gradient(155deg, rgba(240,111,168,.16), rgba(108,74,182,.12));
+    border:1px solid rgba(253,249,246,.18); text-align:right; position:relative;
+  }
+  .msg-received .tag{ font-size:12px; font-weight:800; color:var(--pink-2); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .msg-received p{ margin:0; font-size:15px; line-height:1.9; color:#fff; }
+
+  .msg-compose{ max-width:520px; margin:20px auto 0; text-align:right; }
+  .msg-compose label{ display:block; font-size:12.5px; color:var(--ink-faint); margin-bottom:8px; font-weight:700; }
+  .msg-compose textarea{
+    width:100%; min-height:96px; resize:vertical; border-radius:16px; padding:14px 16px;
+    background:rgba(253,249,246,.06); border:1.5px solid rgba(253,249,246,.2); color:#fff;
+    font-family:inherit; font-size:14px; line-height:1.7; outline:none;
+  }
+  .msg-compose textarea:focus{ border-color:var(--teal-bright); }
+  .msg-compose .count{ font-size:11px; color:var(--ink-faint); text-align:left; margin-top:6px; }
+
+  .done-note{ max-width:460px; margin:20px auto 0; text-align:center; font-size:14.5px; color:var(--teal-bright); font-weight:800; display:none; }
+  .done-note.show{ display:block; }
+
+  /* ---------- admin ---------- */
+  .admin{ position:fixed; bottom:14px; left:14px; z-index:5; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(253,249,246,.06); border:1px solid rgba(253,249,246,.14); color:var(--ink-faint); cursor:pointer; transition:.2s; }
   .admin:hover{ opacity:1; background:rgba(253,249,246,.12); }
   .admin svg{ width:16px; height:16px; }
-
-  .modal-veil{
-    position:fixed; inset:0; background:rgba(5,20,23,.72); backdrop-filter:blur(3px);
-    display:none; align-items:center; justify-content:center; z-index:20; padding:20px;
-  }
+  .modal-veil{ position:fixed; inset:0; background:rgba(5,20,23,.72); backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:20; padding:20px; }
   .modal-veil.show{ display:flex; }
-  .modal{
-    background:var(--teal-deep2); border:1px solid rgba(253,249,246,.16); border-radius:20px;
-    padding:26px; max-width:340px; text-align:center; box-shadow:var(--shadow);
-  }
+  .modal{ background:var(--teal-deep2); border:1px solid rgba(253,249,246,.16); border-radius:20px; padding:26px; max-width:340px; text-align:center; box-shadow:var(--shadow); }
   .modal p{ font-size:14px; color:var(--ink-soft); line-height:1.8; margin:0 0 18px; }
   .modal .row{ display:flex; gap:10px; }
   .modal button{ all:unset; flex:1; text-align:center; padding:10px; border-radius:12px; font-weight:700; font-size:13.5px; cursor:pointer; }
@@ -231,13 +217,11 @@
   footer.credit{ text-align:center; padding:14px 10px 22px; font-size:11px; color:var(--ink-faint); position:relative; z-index:1; }
 
   @media (max-width:560px){
-    .bubble{ width:112px; height:112px; border-radius:26px; }
-    .galaxy{ height:420px; }
+    .bubble{ width:104px; height:104px; border-radius:26px; }
+    .galaxy{ height:380px; }
+    .step-label{ display:none; }
   }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
-  }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; } }
 </style>
 </head>
 <body>
@@ -251,56 +235,90 @@
       <div class="mark">
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v11H8l-4 4V4z"/><circle cx="9" cy="9.5" r=".6" fill="#fff" stroke="none"/><circle cx="12" cy="9.5" r=".6" fill="#fff" stroke="none"/><circle cx="15" cy="9.5" r=".6" fill="#fff" stroke="none"/></svg>
       </div>
-      <div class="txt">
-        <b>اسألني ASK ME</b>
-        <span>المجلس الاستشاري الطلابي</span>
-      </div>
+      <div class="txt"><b>اسألني ASK ME</b><span>المجلس الاستشاري الطلابي</span></div>
     </div>
     <div class="zone-pill">Zone 1 — <em>البدايات</em></div>
   </header>
 
+  <nav class="stepper" id="stepper"></nav>
+
   <main>
 
-    <!-- ===================== SCREEN 1 ===================== -->
-    <section id="screen-choose" class="screen active">
+    <!-- ===== STEP 1 — feeling ===== -->
+    <section id="step-1" class="screen active">
       <div class="hero">
         <div class="eyebrow">من هنا بدأنا</div>
         <h1>ما الشعور الذي يرافقكِ الآن؟</h1>
-        <p>توقفي للحظة… كل بداية تحمل شعورًا مختلفًا. اختاري ما يشبهكِ اليوم، واكتشفي كم طالبة تشعر بمثل شعوركِ.</p>
+        <p>توقفي للحظة… كل بداية تحمل شعورًا مختلفًا. اختاري ما يشبهكِ اليوم.</p>
       </div>
-
       <div class="grid" id="feelingsGrid" role="list"></div>
+      <div class="foot-note"><span class="dot"></span><span id="todayCount">أول من يشارك مشاعرها اليوم</span></div>
+    </section>
 
-      <div class="foot-note">
-        <span class="dot"></span>
-        <span id="todayCount">أول من يشارك مشاعرها اليوم</span>
+    <!-- ===== STEP 2 — goal ===== -->
+    <section id="step-2" class="screen">
+      <div class="hero">
+        <div class="eyebrow">الخطوة التالية</div>
+        <h1>وما الهدف الذي تريدين تحقيقه؟</h1>
+        <p>فكّري في هذا العام الجامعي… أي شيء تتمنين أن تصلي إليه؟</p>
+      </div>
+      <div class="grid" id="goalsGrid" role="list"></div>
+      <div class="nav-row"><button class="btn btn-ghost" id="backTo1">رجوع</button></div>
+    </section>
+
+    <!-- ===== STEP 3 — wisdom + stat ===== -->
+    <section id="step-3" class="screen result">
+      <div class="galaxy" id="galaxy"></div>
+      <div class="result-card">
+        <div class="orb" id="orb" style="--c:var(--teal)"><div class="ic" id="orbIcon"></div><div class="lb" id="orbLabel"></div></div>
+        <div class="stat-badge" id="statBadge"></div>
+        <div class="wisdom-card">
+          <div class="goal-tag"><span class="ic" id="goalTagIcon"></span><span id="goalTagLabel"></span></div>
+          <div class="quote" id="wisdomQuote"></div>
+          <div class="bridge">حكمة تستحق أن تحتفظي بها طوال سنواتكِ الجامعية</div>
+        </div>
+        <div class="nav-row"><button class="btn btn-primary" id="toStep4">التالي — مصارحات الطالبات القدامى</button></div>
       </div>
     </section>
 
-    <!-- ===================== SCREEN 2 ===================== -->
-    <section id="screen-result" class="screen result">
-      <div class="galaxy" id="galaxy"></div>
+    <!-- ===== STEP 4 — senior Q&A ===== -->
+    <section id="step-4" class="screen">
+      <div class="hero">
+        <div class="eyebrow">نحن معكِ</div>
+        <h1>أسئلة أجابت عنها طالبات سبقنكِ</h1>
+        <p>اضغطي على ما يشغل بالكِ الآن، واقرئي إجابة صادقة من طالبات قديمات.</p>
+      </div>
+      <div class="concern-grid" id="concernGrid"></div>
+      <div id="concernAnswers"></div>
+      <div class="nav-row"><button class="btn btn-primary" id="toStep5">التالي — رسالة من مجهول</button></div>
+    </section>
 
-      <div class="result-card">
-        <div class="orb-wrap">
-          <div class="orb" id="orb" style="--c:var(--teal)">
-            <div class="ic" id="orbIcon"></div>
-            <div class="lb" id="orbLabel"></div>
-          </div>
+    <!-- ===== STEP 5 — pass the torch ===== -->
+    <section id="step-5" class="screen">
+      <div class="hero">
+        <div class="eyebrow">تبادل الرسائل</div>
+        <h1>رسالة من مجهول 💌</h1>
+        <p>قبل أن ترحلي… اقرئي رسالة من طالبة سبقتكِ، ثم اتركي رسالتكِ لمن ستأتي بعدكِ.</p>
+      </div>
+
+      <div class="msg-received">
+        <div class="tag">💌 وصلتكِ هذه الرسالة</div>
+        <p id="receivedMsg"></p>
+      </div>
+
+      <div class="msg-compose" id="composeBox">
+        <label for="msgInput">اكتبي رسالتكِ للطالبة التي ستأتي بعدكِ</label>
+        <textarea id="msgInput" maxlength="220" placeholder="مثال: لا تخافي من البداية، ستعتادين عليها أسرع مما تتوقعين…"></textarea>
+        <div class="count"><span id="charCount">0</span>/220</div>
+        <div class="nav-row" style="margin-top:16px;">
+          <button class="btn btn-primary" id="sendMsg">إرسال الرسالة ✨</button>
         </div>
-
-        <div class="stat">
-          <div class="ring-num"><small>٪</small><span id="percentNum">٠</span></div>
-          <p id="statLine"></p>
-        </div>
-
-        <div class="msg-line" id="msgLine"></div>
-
-        <div class="actions">
-          <button class="btn-next" id="btnNext">التالية ✨</button>
-          <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+        <div class="nav-row" style="margin-top:8px;">
+          <button class="btn btn-ghost" id="skipMsg">تخطي هذه الخطوة</button>
         </div>
       </div>
+
+      <div class="done-note" id="doneNote">تم إرسال رسالتكِ 💌 ستصل لطالبة تليكِ. بالتوفيق في رحلتكِ الجامعية!</div>
     </section>
 
   </main>
@@ -308,14 +326,13 @@
   <footer class="credit">جدار البدايات · جامعة الأميرة نورة بنت عبدالرحمن — تُعرض هذه التجربة على أجهزة الركن فقط</footer>
 </div>
 
-<!-- admin reset -->
 <div class="admin" id="adminBtn" title="إعادة ضبط الإحصائيات">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
 </div>
 
 <div class="modal-veil" id="modalVeil">
   <div class="modal">
-    <p>هل ترغبين في مسح جميع إحصائيات المشاعر لهذا الركن؟ هذا الإجراء يُستخدم فقط من قِبل منسقة الركن في بداية الفعالية.</p>
+    <p>هل ترغبين في مسح جميع إحصائيات المشاعر والرسائل لهذا الركن؟ هذا الإجراء يُستخدم فقط من قِبل منسقة الركن في بداية الفعالية.</p>
     <div class="row">
       <button class="cancel" id="modalCancel">إلغاء</button>
       <button class="confirm" id="modalConfirm">مسح البيانات</button>
@@ -327,183 +344,300 @@
 (function(){
   "use strict";
 
-  /* ---------------- feelings data ---------------- */
-  // color families are intentional: purple = مشاعر مكثّفة، وردي = مشاعر دافئة، تركواز = مشاعر هادئة
+  /* ============================================================
+     DATA
+  ============================================================ */
   const FEELINGS = [
     { id:"tawattur", label:"توتر", color:"#6C4AB6",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4-7 4 12 4-9 3 6 3-4"/></svg>',
-      msg:"التوتر في أول يوم طبيعي جدًا، وهو دليل أنكِ تهتمين ببداية موفّقة." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4-7 4 12 4-9 3 6 3-4"/></svg>' },
     { id:"khawf", label:"خوف", color:"#5A3FA0",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>',
-      msg:"الخوف من المجهول جزء من كل بداية حقيقية، وطالبات كثيرات شعرن بنفس الشيء ثم تجاوزنه." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6-10-6-10-6z"/><circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/></svg>' },
     { id:"taraddud", label:"تردد", color:"#7C56C9",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M6 10L2 6M6 10l4-4"/><path d="M18 20V4M18 4l-4 4M18 4l4 4"/></svg>',
-      msg:"التردد يعني أنكِ تزنين خياراتكِ بعناية — هذا نضج لا قلق." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20V10M6 10L2 6M6 10l4-4"/><path d="M18 20V4M18 4l-4 4M18 4l4 4"/></svg>' },
     { id:"hamas", label:"حماس", color:"#E14F94",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>',
-      msg:"احتفظي بهذا الحماس — سيكون وقودكِ في أصعب أسابيع الدراسة." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>' },
     { id:"ishtiyaq", label:"اشتياق", color:"#F06FA8",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10c4-2 4 4 8 2s4-4 8-2"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/></svg>',
-      msg:"من الطبيعي أن تشتاقي لما هو مألوف وأنتِ تبنين شيئًا جديدًا." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10c4-2 4 4 8 2s4-4 8-2"/><circle cx="4" cy="10" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="10" r="1.4" fill="currentColor" stroke="none"/></svg>' },
     { id:"hirs", label:"حرص", color:"#C24E9E",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>',
-      msg:"حرصكِ على البداية الصحيحة هو أول خطوة نحو التميز." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>' },
     { id:"fudul", label:"فضول", color:"#2FA9AE",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>',
-      msg:"الفضول هو ما يجعل الجامعة مساحة اكتشاف لا مجرد محاضرات." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>' },
     { id:"tafaul", label:"تفاؤل", color:"#17B8A0",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>',
-      msg:"تفاؤلكِ سينعكس على كل خيار تتخذينه هذا الفصل." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>' },
     { id:"hudu", label:"هدوء", color:"#16818C",
-      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-2 3 2 6 2s3-4 6-2 3 2 6 2M3 15c3-2 3 2 6 2s3-4 6-2 3 2 6 2"/></svg>',
-      msg:"هدوؤكِ اليوم أساس متين تبنين عليه بقية رحلتكِ." },
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-2 3 2 6 2s3-4 6-2 3 2 6 2M3 15c3-2 3 2 6 2s3-4 6-2 3 2 6 2"/></svg>' },
   ];
 
-  const STORAGE_KEY = "askme_zone1_responses_v1";
+  const GOALS = [
+    { id:"academic", label:"تفوّق أكاديمي", color:"#6C4AB6",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V15c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></svg>',
+      quote:"التفوق ليس أن تكوني الأولى دائمًا، بل أن تكوني أفضل نسخة من نفسك في كل فصل دراسي." },
+    { id:"friends", label:"صداقات حقيقية", color:"#F06FA8",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg>',
+      quote:"ابحثي عمّن يشبهكِ بصدقه لا بإطرائه؛ صداقة واحدة صادقة تعادل عشرين معرفة عابرة." },
+    { id:"passion", label:"اكتشاف شغفي", color:"#2FA9AE",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6 6-2z"/></svg>',
+      quote:"لا بأس أن تغيّري رأيك عشر مرات قبل أن تجدي ما يناسبكِ؛ البحث نفسه جزء من الاكتشاف." },
+    { id:"balance", label:"توازن بين الدراسة والحياة", color:"#7C56C9",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 7h12M6 7l-3 6h6l-3-6zM18 7l-3 6h6l-3-6z"/></svg>',
+      quote:"الراحة ليست تقصيرًا في حق دراستكِ، بل استثمار فيها." },
+    { id:"confidence", label:"الثقة بالنفس", color:"#E14F94",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.6L20 9l-4.5 3.9L16.9 19 12 15.8 7.1 19l1.4-6.1L4 9l5.8-.4L12 3z"/></svg>',
+      quote:"ثقتكِ لا تُبنى من كمال أدائك، بل من قبولكِ لأخطائكِ ومحاولتكِ من جديد." },
+    { id:"leadership", label:"مهارات قيادية", color:"#5A3FA0",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18M5 4h13l-3 4 3 4H5"/></svg>',
+      quote:"القيادة الحقيقية تبدأ حين تتعلمين الإنصات قبل أن تتحدثي." },
+    { id:"independence", label:"استقلالية", color:"#17B8A0",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="4"/><path d="M11 12l9 9M16 15l3-3M18 17l2-2"/></svg>',
+      quote:"أن تطلبي المساعدة ليس ضعفًا في استقلاليتكِ، بل نضج في فهمها." },
+    { id:"enjoy", label:"الاستمتاع بالتجربة", color:"#C24E9E",
+      icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14c1.2 1.4 2.6 2 4 2s2.8-.6 4-2"/><circle cx="9" cy="10" r=".8" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r=".8" fill="currentColor" stroke="none"/></svg>',
+      quote:"لن تتكرر هذه السنوات، فامنحي نفسكِ إذنًا بالاستمتاع لا فقط بالإنجاز." },
+  ];
 
-  /* ---------------- storage helpers ---------------- */
-  function loadAll(){
-    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-    catch(e){ return []; }
-  }
-  function saveAll(list){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  }
-  function isSameDay(ts, ref){
-    const a = new Date(ts), b = new Date(ref);
-    return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-  }
-  function todaysResponses(){
-    const now = Date.now();
-    return loadAll().filter(r => isSameDay(r.ts, now));
-  }
-  function addResponse(id){
-    const all = loadAll();
-    all.push({ feeling:id, ts:Date.now() });
-    saveAll(all);
-  }
+  const CONCERNS = [
+    { id:"gpa", label:"المعدل", answer:"المعدل رقم يتغيّر كل فصل، لكن شخصيتكِ التي تبنينها لا تُقاس برقم. لا تجعليه مقياسكِ الوحيد للنجاح." },
+    { id:"assignments", label:"التكليفات", answer:"قسّمي التكليف الكبير إلى خطوات صغيرة تبدئينها من أول أسبوع، الأجزاء البسيطة تصنع الفرق الكبير." },
+    { id:"relationships", label:"العلاقات", answer:"لن تنسجمي مع الجميع، وهذا طبيعي. ابحثي عن دائرة صغيرة تشعرين معها بالأمان لا عن شعبية واسعة." },
+    { id:"speaking", label:"الخوف من المواجهة", answer:"أول مرة ترفعين فيها يدكِ في المحاضرة ستكون الأصعب، وكل مرة بعدها أسهل. جرّبي مرة واحدة فقط." },
+    { id:"time", label:"تنظيم الوقت", answer:"لا يوجد جدول مثالي من أول أسبوع، جرّبي وعدّلي إلى أن تجدي إيقاعكِ الخاص." },
+    { id:"belonging", label:"التأقلم مع الجامعة", answer:"التأقلم يأخذ وقتًا أطول مما تتوقعين، امنحي نفسكِ أسابيع لا أيامًا لتشعري بالانتماء." },
+  ];
+
+  const SEED_MESSAGES = [
+    "أول أسبوع كان صعبًا عليّ، لكن بعد شهر شعرت أن الجامعة صارت بيتي الثاني. لا تستعجلي على نفسكِ.",
+    "لا تخافي من السؤال، كل من حولكِ مرّ بنفس الحيرة في أول أيامه.",
+    "اكتبي كل موعد تسليم فور معرفته، هذه العادة الصغيرة وفّرت عليّ الكثير من التوتر.",
+    "أجمل صداقاتي الجامعية بدأت من زميلة جلست بجانبي في محاضرة عشوائية، كوني منفتحة.",
+    "لن تحبي كل مادة، وهذا لا يعني أنكِ اخترتِ تخصصًا خاطئًا.",
+    "امنحي نفسكِ حق التعب دون شعور بالذنب، الجامعة رحلة طويلة لا سباقًا قصيرًا.",
+  ];
+
+  const STORE_RESPONSES = "askme_zone1_responses_v2";
+  const STORE_MESSAGES  = "askme_zone1_messages_v2";
+
+  /* ============================================================
+     STORAGE HELPERS
+  ============================================================ */
+  function loadJSON(key, fallback){ try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch(e){ return fallback; } }
+  function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+  function isSameDay(ts, ref){ const a=new Date(ts), b=new Date(ref); return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+  function todaysResponses(){ const now=Date.now(); return loadJSON(STORE_RESPONSES, []).filter(r=>isSameDay(r.ts, now)); }
+  function addResponse(feelingId, goalId){ const all=loadJSON(STORE_RESPONSES, []); all.push({ feeling:feelingId, goal:goalId, ts:Date.now() }); saveJSON(STORE_RESPONSES, all); }
+  function getMessagePool(){ const stored = loadJSON(STORE_MESSAGES, null); return stored && stored.length ? stored : SEED_MESSAGES.map(t=>({text:t, ts:0})); }
+  function addMessage(text){ const all = loadJSON(STORE_MESSAGES, []); const base = all.length ? all : SEED_MESSAGES.map(t=>({text:t, ts:0})); base.push({text, ts:Date.now()}); saveJSON(STORE_MESSAGES, base); }
   function arNum(n){ return new Intl.NumberFormat('ar-SA').format(n); }
 
-  /* ---------------- build screen 1 grid ---------------- */
-  const grid = document.getElementById("feelingsGrid");
+  /* ============================================================
+     STATE + STEPPER
+  ============================================================ */
+  const STEPS = [
+    {n:1, label:"شعورك"},
+    {n:2, label:"هدفك"},
+    {n:3, label:"حكمتك"},
+    {n:4, label:"مصارحة"},
+    {n:5, label:"رسالة"},
+  ];
+  let current = 1;
+  const session = { feelingId:null, goalId:null };
+
+  const stepperEl = document.getElementById("stepper");
+  STEPS.forEach((s, i)=>{
+    const item = document.createElement("div");
+    item.className = "step-item";
+    item.id = "stepitem-"+s.n;
+    item.innerHTML = `<span class="step-dot">${arNum(s.n)}</span><span class="step-label">${s.label}</span>`;
+    stepperEl.appendChild(item);
+    if(i < STEPS.length-1){ const line=document.createElement("div"); line.className="step-line"; stepperEl.appendChild(line); }
+  });
+
+  function renderStepper(){
+    STEPS.forEach(s=>{
+      const el = document.getElementById("stepitem-"+s.n);
+      el.classList.toggle("active", s.n===current);
+      el.classList.toggle("done", s.n<current);
+    });
+  }
+
+  function goTo(n){
+    document.getElementById("step-"+current).classList.remove("active");
+    current = n;
+    document.getElementById("step-"+current).classList.add("active");
+    renderStepper();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  /* ============================================================
+     STEP 1 — feelings grid
+  ============================================================ */
+  const feelingsGrid = document.getElementById("feelingsGrid");
   FEELINGS.forEach(f=>{
     const btn = document.createElement("button");
-    btn.className = "bubble";
-    btn.style.setProperty("--c", f.color);
-    btn.setAttribute("role","listitem");
-    btn.setAttribute("aria-label", f.label);
+    btn.className = "bubble"; btn.style.setProperty("--c", f.color);
+    btn.setAttribute("role","listitem"); btn.setAttribute("aria-label", f.label);
     btn.innerHTML = `<span class="ic">${f.icon}</span><span class="lb">${f.label}</span>`;
-    btn.addEventListener("click", ()=> chooseFeeling(f.id));
-    grid.appendChild(btn);
+    btn.addEventListener("click", ()=>{
+      session.feelingId = f.id;
+      [...feelingsGrid.children].forEach(b=>b.classList.remove("picked"));
+      btn.classList.add("picked");
+      setTimeout(()=> goTo(2), 180);
+    });
+    feelingsGrid.appendChild(btn);
   });
 
   function updateTodayCount(){
     const n = todaysResponses().length;
-    const el = document.getElementById("todayCount");
-    el.textContent = n === 0
+    document.getElementById("todayCount").textContent = n === 0
       ? "أول من يشارك مشاعرها اليوم"
       : `${arNum(n)} طالبة شاركت مشاعرها اليوم`;
   }
   updateTodayCount();
 
-  /* ---------------- galaxy background ---------------- */
+  /* ============================================================
+     STEP 2 — goals grid
+  ============================================================ */
+  const goalsGrid = document.getElementById("goalsGrid");
+  GOALS.forEach(g=>{
+    const btn = document.createElement("button");
+    btn.className = "bubble"; btn.style.setProperty("--c", g.color);
+    btn.setAttribute("role","listitem"); btn.setAttribute("aria-label", g.label);
+    btn.innerHTML = `<span class="ic">${g.icon}</span><span class="lb">${g.label}</span>`;
+    btn.addEventListener("click", ()=>{
+      session.goalId = g.id;
+      [...goalsGrid.children].forEach(b=>b.classList.remove("picked"));
+      btn.classList.add("picked");
+      setTimeout(buildStep3, 180);
+    });
+    goalsGrid.appendChild(btn);
+  });
+  document.getElementById("backTo1").addEventListener("click", ()=>goTo(1));
+
+  /* ============================================================
+     STEP 3 — wisdom + galaxy + stat
+  ============================================================ */
   const galaxyEl = document.getElementById("galaxy");
-  function renderGalaxy(highlightId){
+  function renderGalaxy(highlightFeeling){
     galaxyEl.innerHTML = "";
-    const all = loadAll();
-    const sample = all.length > 160
-      ? all.sort(()=>Math.random()-0.5).slice(0,160)
-      : all;
-    sample.forEach((r, i)=>{
-      const f = FEELINGS.find(x=>x.id===r.feeling);
-      if(!f) return;
+    const all = loadJSON(STORE_RESPONSES, []);
+    const sample = all.length > 150 ? all.sort(()=>Math.random()-0.5).slice(0,150) : all;
+    sample.forEach((r,i)=>{
+      const f = FEELINGS.find(x=>x.id===r.feeling); if(!f) return;
       const s = document.createElement("span");
-      const isNew = highlightId && i === sample.length-1 && r.feeling===highlightId;
+      const isNew = highlightFeeling && i===sample.length-1 && r.feeling===highlightFeeling;
       s.className = "star" + (isNew ? " new" : "");
       const size = 4 + Math.random()*7;
-      s.style.width = size+"px";
-      s.style.height = size+"px";
-      s.style.left = (Math.random()*96)+"%";
-      s.style.top = (Math.random()*94)+"%";
-      s.style.background = f.color;
-      s.style.boxShadow = `0 0 ${8+size}px ${f.color}`;
+      s.style.width = size+"px"; s.style.height = size+"px";
+      s.style.left = (Math.random()*96)+"%"; s.style.top = (Math.random()*90)+"%";
+      s.style.background = f.color; s.style.boxShadow = `0 0 ${8+size}px ${f.color}`;
       s.style.animationDelay = (Math.random()*4)+"s, "+(Math.random()*6)+"s";
       s.style.animationDuration = (2.6+Math.random()*2.4)+"s, "+(10+Math.random()*8)+"s";
       galaxyEl.appendChild(s);
     });
   }
 
-  /* ---------------- screen 2 ---------------- */
-  const screenChoose = document.getElementById("screen-choose");
-  const screenResult = document.getElementById("screen-result");
-  const orb = document.getElementById("orb");
-  const orbIcon = document.getElementById("orbIcon");
-  const orbLabel = document.getElementById("orbLabel");
-  const percentNum = document.getElementById("percentNum");
-  const statLine = document.getElementById("statLine");
-  const msgLine = document.getElementById("msgLine");
-  const progressBar = document.getElementById("progressBar");
-  let autoTimer = null;
-
-  function chooseFeeling(id){
-    addResponse(id);
-    const f = FEELINGS.find(x=>x.id===id);
+  function buildStep3(){
+    addResponse(session.feelingId, session.goalId);
+    const f = FEELINGS.find(x=>x.id===session.feelingId);
+    const g = GOALS.find(x=>x.id===session.goalId);
     const today = todaysResponses();
-    const count = today.filter(r=>r.feeling===id).length;
+    const count = today.filter(r=>r.feeling===session.feelingId).length;
     const percent = Math.round((count/today.length)*100);
 
+    const orb = document.getElementById("orb");
     orb.style.setProperty("--c", f.color);
-    orbIcon.innerHTML = f.icon;
-    orbLabel.textContent = f.label;
-    msgLine.textContent = f.msg;
-    statLine.innerHTML = `<b>${arNum(count)}</b> من أصل ${arNum(today.length)} مشاركة اليوم اخترن نفس شعوركِ. لستِ وحدكِ.`;
+    document.getElementById("orbIcon").innerHTML = f.icon;
+    document.getElementById("orbLabel").textContent = f.label;
+    document.getElementById("statBadge").innerHTML = `<b>٪${arNum(percent)}</b> من الطالبات اخترن نفس شعوركِ اليوم — لستِ وحدكِ`;
 
-    animatePercent(percent);
-    renderGalaxy(id);
+    document.getElementById("goalTagIcon").innerHTML = g.icon;
+    document.getElementById("goalTagLabel").textContent = "هدفكِ: " + g.label;
+    document.getElementById("wisdomQuote").textContent = g.quote;
+
+    renderGalaxy(session.feelingId);
     updateTodayCount();
+    goTo(3);
+  }
+  document.getElementById("toStep4").addEventListener("click", ()=>goTo(4));
 
-    screenChoose.classList.remove("active");
-    screenResult.classList.add("active");
+  /* ============================================================
+     STEP 4 — senior Q&A
+  ============================================================ */
+  const concernGrid = document.getElementById("concernGrid");
+  const concernAnswers = document.getElementById("concernAnswers");
+  CONCERNS.forEach(c=>{
+    const pill = document.createElement("button");
+    pill.className = "concern-pill";
+    pill.textContent = c.label;
+    const ans = document.createElement("div");
+    ans.className = "concern-answer";
+    ans.innerHTML = `<b>إجابة من طالبات قديمات — ${c.label}</b>${c.answer}`;
+    concernAnswers.appendChild(ans);
+    pill.addEventListener("click", ()=>{
+      pill.classList.toggle("open");
+      ans.classList.toggle("show");
+    });
+    concernGrid.appendChild(pill);
+  });
+  document.getElementById("toStep5").addEventListener("click", buildStep5);
 
-    // restart auto-return progress bar
-    progressBar.style.animation = "none";
-    void progressBar.offsetWidth;
-    progressBar.style.animation = "shrink 12s linear forwards";
-    clearTimeout(autoTimer);
-    autoTimer = setTimeout(goToChoose, 12000);
+  /* ============================================================
+     STEP 5 — pass the torch
+  ============================================================ */
+  const msgInput = document.getElementById("msgInput");
+  const charCount = document.getElementById("charCount");
+  const composeBox = document.getElementById("composeBox");
+  const doneNote = document.getElementById("doneNote");
+
+  msgInput.addEventListener("input", ()=> charCount.textContent = msgInput.value.length);
+
+  function buildStep5(){
+    const pool = getMessagePool();
+    const pick = pool[Math.floor(Math.random()*pool.length)];
+    document.getElementById("receivedMsg").textContent = pick.text;
+    msgInput.value = ""; charCount.textContent = "0";
+    composeBox.style.display = "";
+    doneNote.classList.remove("show");
+    goTo(5);
   }
 
-  function animatePercent(target){
-    let cur = 0;
-    const step = Math.max(1, Math.round(target/24));
-    clearInterval(percentNum._t);
-    percentNum._t = setInterval(()=>{
-      cur = Math.min(target, cur+step);
-      percentNum.textContent = arNum(cur);
-      if(cur>=target) clearInterval(percentNum._t);
-    }, 22);
+  function finishJourney(){
+    composeBox.style.display = "none";
+    doneNote.classList.add("show");
+    setTimeout(()=>{
+      session.feelingId = null; session.goalId = null;
+      [...feelingsGrid.children].forEach(b=>b.classList.remove("picked"));
+      [...goalsGrid.children].forEach(b=>b.classList.remove("picked"));
+      [...concernGrid.children].forEach(p=>p.classList.remove("open"));
+      [...concernAnswers.children].forEach(a=>a.classList.remove("show"));
+      goTo(1);
+    }, 3200);
   }
 
-  function goToChoose(){
-    clearTimeout(autoTimer);
-    screenResult.classList.remove("active");
-    screenChoose.classList.add("active");
-  }
-  document.getElementById("btnNext").addEventListener("click", goToChoose);
+  document.getElementById("sendMsg").addEventListener("click", ()=>{
+    const text = msgInput.value.trim();
+    if(text.length >= 3){ addMessage(text); }
+    finishJourney();
+  });
+  document.getElementById("skipMsg").addEventListener("click", finishJourney);
 
-  /* ---------------- admin reset ---------------- */
+  /* ============================================================
+     ADMIN RESET
+  ============================================================ */
   const adminBtn = document.getElementById("adminBtn");
   const modalVeil = document.getElementById("modalVeil");
   adminBtn.addEventListener("click", ()=> modalVeil.classList.add("show"));
   document.getElementById("modalCancel").addEventListener("click", ()=> modalVeil.classList.remove("show"));
   document.getElementById("modalConfirm").addEventListener("click", ()=>{
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORE_RESPONSES);
+    localStorage.removeItem(STORE_MESSAGES);
     modalVeil.classList.remove("show");
     updateTodayCount();
-    goToChoose();
+    goTo(1);
   });
+
+  renderStepper();
 
 })();
 </script>
 </body>
-</html></html>
+</html></html></html>
